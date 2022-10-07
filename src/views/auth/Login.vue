@@ -1,5 +1,5 @@
 <script>
-import { useUserStore } from "../stores/user";
+import { useUserStore } from "../../stores/user";
 export default {
   setup() {
     const userStore = useUserStore();
@@ -15,12 +15,8 @@ export default {
   methods: {
     login() {
       this.userStore.login(this.email, this.password)
-        .then(() => {
-          this.$router.push({ path: '/' });
-        })
-        .catch(err => {
-          this.error = err;
-        })
+        .then(this.$router.push({ path: '/' }))
+        .catch(err => this.error = err )
     },
   },
 };
