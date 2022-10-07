@@ -6,6 +6,12 @@
     "build": "vite build",
     "preview": "vite preview --port 4173"
   },
+   "prettier": {
+    "trailingComma": "es5",
+    "tabWidth": 2,
+    "semi": true,
+    "singleQuote": true
+  },
   "dependencies": {
     "pinia": "^2.0.21",
     "vue": "^3.2.38",
