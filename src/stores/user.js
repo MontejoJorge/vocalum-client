@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import api from './services/axios';
+import { getToken, setToken, removeToken } from '../util/auth';
 
 export const useUserStore = defineStore('user', {
   state: () => ({
@@ -7,7 +8,7 @@ export const useUserStore = defineStore('user', {
     surname: undefined,
     email: undefined,
     phone: undefined,
-    token: undefined
+    token: getToken()
   }),
   getters: {},
   actions: {
@@ -19,6 +20,7 @@ export const useUserStore = defineStore('user', {
         })
         .then(res => {
           this.token = res.data.token;
+          setToken(this.token);
           resolve();
         }).catch(err => reject(err.response.data.message));
 
@@ -35,6 +37,7 @@ export const useUserStore = defineStore('user', {
         })
         .then(res => {
           this.token = res.data.token;
+          setToken(this.token);
           resolve();
         }).catch(err => reject(err.response.data.message));
 
