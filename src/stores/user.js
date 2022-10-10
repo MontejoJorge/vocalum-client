@@ -39,6 +39,16 @@ export const useUserStore = defineStore('user', {
         }).catch(err => reject(err.response.data.message));
 
       })
+    },
+    async fetchUser() {
+      await api.get('/user')
+        .then(res => {
+          const { name, surname, email, phone } = res.data;
+          this.name = name;
+          this.surname = surname;
+          this.email = email;
+          this.phone = phone;
+        })
     }
   },
 });
