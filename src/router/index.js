@@ -5,6 +5,7 @@ import Register from "../views/auth/Register.vue";
 import { getToken } from '../util/auth';
 
 const Profile = () => import('../views/Profile.vue');
+const Create = () => import('../views/Create.vue');
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -28,6 +29,12 @@ const router = createRouter({
       path: "/profile",
       name: "profile",
       component: Profile,
+      meta: { needAuth: true }
+    },
+    {
+      path: "/create",
+      name: "create",
+      component: Create,
       meta: { needAuth: true }
     }
   ],

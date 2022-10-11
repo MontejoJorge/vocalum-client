@@ -9,7 +9,10 @@ const api = axios.create({
 
 api.interceptors.request.use(config => {
   const userStore = useUserStore();
-  config.headers = {'x-auth-token': userStore.token}
+  config.headers = {
+    'x-auth-token': userStore.token,
+    'content-type': 'multipart/form-data'
+  }
   return config;
 })
 
