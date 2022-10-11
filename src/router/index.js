@@ -6,6 +6,7 @@ import { getToken } from '../util/auth';
 
 const Profile = () => import('../views/Profile.vue');
 const Create = () => import('../views/Create.vue');
+const Search = () => import('../views/Search.vue');
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -36,6 +37,11 @@ const router = createRouter({
       name: "create",
       component: Create,
       meta: { needAuth: true }
+    },
+    {
+      path: "/search",
+      name: "search",
+      component: Search
     }
   ],
 });

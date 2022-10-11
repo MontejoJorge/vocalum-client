@@ -25,6 +25,11 @@
               Create
             </RouterLink>
           </li>
+          <li class="nav-item">
+            <RouterLink to="/search" class="nav-link">
+              Search
+            </RouterLink>
+          </li>
         </ul>
         <ul class="nav navbar-nav ml-auto w-100 justify-content-end">
           <li v-if="userStore.name" class="nav-item">
