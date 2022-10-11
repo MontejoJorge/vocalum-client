@@ -21,6 +21,7 @@ export const useUserStore = defineStore('user', {
         .then(res => {
           this.token = res.data.token;
           setToken(this.token);
+          this.fetchUser();
           resolve();
         }).catch(err => reject(err.response.data.message));
 
@@ -38,6 +39,7 @@ export const useUserStore = defineStore('user', {
         .then(res => {
           this.token = res.data.token;
           setToken(this.token);
+          this.fetchUser();
           resolve();
         }).catch(err => reject(err.response.data.message));
 
