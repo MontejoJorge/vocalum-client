@@ -15,6 +15,17 @@ export const useAdStore = defineStore('ad', {
           this.ads = res.data.ads;
         })
     },
+    async searchAds(filter) {
+      await api.get('/ads', {
+        params: {
+          search: filter.search
+        }
+      })
+        .then(res => {
+          this.totalCount = res.data.count;
+          this.ads = res.data.ads;
+        })
+    },
     createAd({title, description, price, photo}) {
       return new Promise(async (resolve, reject) => {
         await api.post('/ads', {
