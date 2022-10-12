@@ -28,13 +28,14 @@ export const useAdStore = defineStore('ad', {
           this.ads = res.data.ads;
         })
     },
-    createAd({title, description, price, photo}) {
+    createAd({title, description, price, photo, tags}) {
       return new Promise(async (resolve, reject) => {
         await api.post('/ads', {
           title,
           description,
           price,
-          photo
+          photo,
+          tags
         })
           .then(res => {
             console.log(res);

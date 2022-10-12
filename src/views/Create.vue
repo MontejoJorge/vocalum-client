@@ -1,30 +1,23 @@
-<script>
-import { useAdStore } from "../stores/ads";
-export default {
-  setup() {
-    const adStore = useAdStore();
-    return { adStore };
-  },
-  data() {
-    return {
-      ad: {
-        title: "",
-        description: "",
-        price: "",
-        photo: "",
-      },
-      error: null,
-    };
-  },
-  methods: {
-    createAd() {
-      this.adStore.createAd(this.ad)
-    },
-    onChangeFileUpload(event) {
-      this.ad.photo = event.target.files[0];
-    }
-  },
-};
+<script setup>
+  import { useAdStore } from "../stores/ads";
+  import Tags from "../components/Tags.vue";
+  import { ref } from 'vue';
+
+  const adStore = useAdStore();
+  const ad = ref({
+    title: "",
+    description: "",
+    price: "",
+    photo: "",
+    tags: ['']
+  });
+
+  function createAd() {
+    adStore.createAd(ad.value);
+  }
+  function onChangeFileUpload(event) {
+    ad.value.photo = event.target.files[0];
+  }
 </script>
 
 <template>
@@ -38,7 +31,9 @@ export default {
     <input type="text" v-model="ad.price" />
     <label>Photo</label>
     <input type="file" @change="onChangeFileUpload"/>
-    <p>{{ this.error }}</p>
+
+    <Tags :tags="ad.tags"/>
+
     <button type="submit">Crear</button>
   </form>
 </template>
