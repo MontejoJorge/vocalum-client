@@ -18,7 +18,9 @@ export const useAdStore = defineStore('ad', {
     async searchAds(filter) {
       await api.get('/ads', {
         params: {
-          search: filter.search
+          search: filter.search,
+          minPrice: filter.minPrice,
+          maxPrice: filter.maxPrice
         }
       })
         .then(res => {

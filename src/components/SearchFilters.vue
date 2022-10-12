@@ -5,11 +5,14 @@
   const adStore = useAdStore();
 
   const searchText = ref('');
+  const minPrice = ref(undefined);
+  const maxPrice = ref(undefined);
 
   const search = () => {
-    console.log(searchText)
     adStore.searchAds({
-      search: searchText.value
+      search: searchText.value,
+      minPrice: minPrice.value,
+      maxPrice: maxPrice.value
     });
   }
 </script>
@@ -36,8 +39,26 @@
             </h2>
             <div id="advanced-search" class="collapse" data-bs-parent="#accordion-search">
               <div class="accordion-body">
-                <button type="button" class="btn btn-primary">Apply</button>
-                <button type="button" class="btn btn-danger">Remove filters</button>
+                <div class="row">
+                  <div class="col-12 col-sm-6">
+                    <div class="input-group mb-3">
+                      <span class="input-group-text">€ Min.</span>
+                      <input name="price_min" type="text" v-model="minPrice" class="form-control" placeholder="Min">
+                    </div>
+                  </div>
+                  <div class="col-12 col-sm-6">
+                    <div class="input-group mb-3">
+                      <span class="input-group-text">€ Max.</span>
+                      <input name="price_max" type="text" v-model="maxPrice" class="form-control" placeholder="Max">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col d-flex justify-content-between">
+                    <button type="submit" class="btn btn-primary">Apply</button>
+                    <button type="button" class="btn btn-danger">Remove filters</button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
