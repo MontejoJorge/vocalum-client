@@ -19,16 +19,16 @@
 
 <template>
   <form @submit.prevent="search" class="container justify-content-center">
-    <div class="row justify-content-center mb-1">
-      <div class="col-10 col-md-8 mb-1 mb-md-0">
+    <div class="row justify-content-center mb-2">
+      <div class="col-12 col-md-9 mb-1 mb-md-0">
           <input name="search" v-model="searchText" class="form-control me-2" type="search" placeholder="Search">
       </div>
-      <div class="col-10 col-md-2 d-grid">
+      <div class="col-12 col-md-3 d-grid">
         <button class="btn btn-outline-success" type="submit">Search</button>
       </div>
     </div>
-    <div class="row justify-content-center mb-1">
-      <div class="col-10">
+    <div class="row justify-content-center">
+      <div class="col-12">
         <div class="accordion" id="accordion-search">
           <div class="accordion-item">
             <h2 class="accordion-header">
