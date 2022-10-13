@@ -38,7 +38,7 @@
                 <span class="d-inline ps-2">{{ userStore.name }}</span>  
               </a>
               <ul class="dropdown-menu dropdown-menu-end">
-                  <li><RouterLink class="dropdown-item" to="/logout">Logout</RouterLink></li>
+                <li><button class="dropdown-item" @click="userStore.logOut()">Logout</button></li>
               </ul>
             </li>
           </li>

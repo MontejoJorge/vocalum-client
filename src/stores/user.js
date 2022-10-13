@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import api from './services/axios';
 import { getToken, setToken, removeToken } from '../util/auth';
+import router from '../router';
 
 export const useUserStore = defineStore('user', {
   state: () => ({
@@ -54,6 +55,15 @@ export const useUserStore = defineStore('user', {
           this.email = email;
           this.phone = phone;
         })
+    },
+    logOut() {
+      removeToken();
+      this.name = undefined;
+      this.surname = undefined;
+      this.email = undefined;
+      this.phone = undefined;
+      this.token = undefined;
+      router.push({ path: '/' })
     }
   },
 });
