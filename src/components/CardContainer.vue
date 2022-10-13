@@ -17,6 +17,7 @@
           :description="ad.description"
           :price="ad.price" 
           :photo="ad.photo"
+          :url="ad.url"
           />
       </div>
     </div>
