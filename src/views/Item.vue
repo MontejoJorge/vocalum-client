@@ -24,30 +24,54 @@
     <div class="card mb-3" style="max-width: 1000px">
       <div class="row">
         <div class="col-xl-4 col-xxl-5">
-          <img :src="genPhotoUrl(photo)" class="img-fluid rounded" alt="..." />
+          <img v-if="!photo" src="https://via.placeholder.com/600x400?text=Loading...">
+          <img v-else :src="genPhotoUrl(photo)" class="img-fluid rounded"/>
         </div>
         <div class="col">
           <div class="card-body container">
-            <h3 class="card-title">{{ title }}</h3>
+            <h3 v-if="!title" class="card-title placeholder-glow"><span class="placeholder col-6"></span></h3>
+            <h3 v-else class="card-title">{{ title }}</h3>
             <div class="row mb-2">
               <div class="col">
-                <p class="card-text">{{ description }}</p>
+                <p v-if="!description" class="card-text placeholder-glow">
+                  <span class="placeholder col-7"></span>
+                  <span class="placeholder col-4"></span>
+                  <span class="placeholder col-4"></span>
+                  <span class="placeholder col-6"></span>
+                  <span class="placeholder col-8"></span>
+                </p>
+                <p v-else class="card-text">{{ description }}</p>
               </div>
             </div>
             <div class="row">
               <div class="col">
-                <p class="btn btn-primary">{{ price }} €</p>
+                <p v-if="!price" class="btn btn-primary">-- €</p>
+                <p v-else class="btn btn-primary">{{ price }} €</p>
               </div>
             </div>
             <div class="row mb-3">
               <div class="col">
-                <span v-for="tag in tags" class="badge bg-secondary me-1">
+                <p v-if="!tags" class="card-text placeholder-glow">
+                  <span class="placeholder col-3"></span>
+                </p>
+                <span v-else  v-for="tag in tags" class="badge bg-secondary me-1">
                   {{ tag.name }}
                 </span>
               </div>
             </div>
             <hr />
-            <div v-if="user" class="row row-cols-1 row-cols-xl-3">
+            <div v-if="!user" class="row row-cols-1 row-cols-xl-3">
+              <div class="col placeholder-glow">
+                <span class="placeholder col-7"></span>
+              </div>
+              <div class="col">
+                <span class="placeholder col-7"></span>
+              </div>
+              <div class="col">
+                <span class="placeholder col-7"></span>
+              </div>
+            </div>
+            <div v-else class="row row-cols-1 row-cols-xl-3">
               <div class="col">
                 <p>{{ user.name }}</p>
               </div>
@@ -61,7 +85,8 @@
             <hr />
             <div class="row">
               <div class="col">
-                <p class="text-muted">Created: {{ timeSince(created_at) }}</p>
+                <p v-if="!created_at" class="text-muted"><span class="placeholder col-4"></span></p>
+                <p v-else class="text-muted">Created: {{ timeSince(created_at) }}</p>
               </div>
             </div>
           </div>
