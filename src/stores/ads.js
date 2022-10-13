@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import api from './services/axios';
 
-export const useAdStore = defineStore('ad', {
+export const useAdStore = defineStore('ads', {
   state: () => ({
     count: 0,
     ads: []
@@ -44,5 +44,31 @@ export const useAdStore = defineStore('ad', {
           })
       })
     }
+  }
+})
+
+export const useAdInfoStore = defineStore('ad', {
+  state: () => ({
+    title: undefined,
+    description: undefined,
+    price: undefined,
+    photo: undefined,
+    created_at: undefined,
+    tags: undefined,
+    user: undefined
+  }),
+  getters: {},
+  actions: {
+    getAdInfo(url) {
+      return new Promise(async (resolve, reject) => {
+        await api.get(`/ads/${url}`)
+          .then((res) => {
+            Object.assign(this, res.data);            
+          })
+          .catch((err) => {
+            reject(err);
+          })
+      })
+    },
   }
 })
