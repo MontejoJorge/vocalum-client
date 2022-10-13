@@ -20,7 +20,9 @@ export const useAdStore = defineStore('ad', {
         params: {
           search: filter.search,
           minPrice: filter.minPrice,
-          maxPrice: filter.maxPrice
+          maxPrice: filter.maxPrice,
+          tags: filter.tags,
+          orderByPrice: filter.orderByPrice
         }
       })
         .then(res => {

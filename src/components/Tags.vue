@@ -19,7 +19,7 @@
 </script>
 
 <template>
-  <div class="container mb-3">
+  <div class="mb-3">
     <div v-for="(tag, i) in props.tags" class="row mb-2">
       <div :class="(i == 0 ) ? 'col-12' : 'col-9'">
         <input type="text" v-model="props.tags[i]" name="tags[]" class="form-control mb-0" placeholder="Tag"/>

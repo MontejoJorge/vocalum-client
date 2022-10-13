@@ -1,18 +1,23 @@
 <script setup>
   import { useAdStore } from "../stores/ads";
   import { ref } from 'vue'
+  import Tags from "./Tags.vue";
 
   const adStore = useAdStore();
 
-  const searchText = ref('');
+  const searchText = ref(undefined);
   const minPrice = ref(undefined);
   const maxPrice = ref(undefined);
+  const tags = ref([undefined]);
+  const orderByPrice = ref('no');
 
   const search = () => {
     adStore.searchAds({
       search: searchText.value,
       minPrice: minPrice.value,
-      maxPrice: maxPrice.value
+      maxPrice: maxPrice.value,
+      tags: tags.value,
+      orderByPrice: orderByPrice.value
     });
   }
 </script>
@@ -39,18 +44,34 @@
             </h2>
             <div id="advanced-search" class="collapse" data-bs-parent="#accordion-search">
               <div class="accordion-body">
-                <div class="row">
-                  <div class="col-12 col-sm-6">
-                    <div class="input-group mb-3">
+                <div class="row mb-3">
+                  <div class="col-12 col-sm-6 mb-2 mb-md-0">
+                    <div class="input-group ">
                       <span class="input-group-text">€ Min.</span>
                       <input name="price_min" type="text" v-model="minPrice" class="form-control" placeholder="Min">
                     </div>
                   </div>
                   <div class="col-12 col-sm-6">
-                    <div class="input-group mb-3">
+                    <div class="input-group ">
                       <span class="input-group-text">€ Max.</span>
                       <input name="price_max" type="text" v-model="maxPrice" class="form-control" placeholder="Max">
                     </div>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col">
+                    <h6>Order By</h6>
+                    <select name="orderByPrice" v-model="orderByPrice" class="form-select">
+                      <option selected value="no">Choose...</option>
+                      <option value="asc">Price (Ascendant)</option>
+                      <option value="desc">Price (Descendant)</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <h6>Serach by tags</h6>
+                    <Tags :tags="tags"/>
                   </div>
                 </div>
                 <div class="row">
