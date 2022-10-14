@@ -1,6 +1,8 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router';
 import { useUserStore } from '../stores/user';
+import router from '../router/index';
+
 const userStore = useUserStore();
 </script>
 
@@ -36,6 +38,11 @@ const userStore = useUserStore();
             </a>
             <ul class="dropdown-menu dropdown-menu-end">
               <li>
+                <button class="dropdown-item" @click="router.push({path: '/profile'})">
+                  Profile
+                </button>
+              </li>
+              <li>
                 <button class="dropdown-item" @click="userStore.logOut()">
                   Logout
                 </button>
@@ -44,7 +51,12 @@ const userStore = useUserStore();
           </li>
           <li v-else class="nav-item">
             <RouterLink to="/login" class="nav-link">
-              <span class="d-inline">Login | Register</span>
+              <span class="d-inline">Login</span>
+            </RouterLink>
+          </li>
+          <li v-if="!userStore.name" class="nav-item">
+            <RouterLink to="/register" class="nav-link">
+              <span class="d-inline">Register</span>
             </RouterLink>
           </li>
         </ul>
