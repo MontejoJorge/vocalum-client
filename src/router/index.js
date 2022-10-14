@@ -1,9 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Home from '../views/Home.vue';
-import Login from '../views/auth/Login.vue';
-import Register from '../views/auth/Register.vue';
 import { getToken } from '../util/auth';
 
+const Login = () => import('../views/auth/Login.vue');
+const Register = () => import('../views/auth/Register.vue');
 const Profile = () => import('../views/Profile.vue');
 const Create = () => import('../views/Create.vue');
 const Search = () => import('../views/Search.vue');
@@ -55,11 +55,15 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
   const hasToken = getToken();
 
-  if (!to.meta.needAuth) {
-    next();
-  } else {
-    if (!hasToken) {
+  if (to.meta.needAuth) {
+    if (hasToken) {
+      next();
+    } else {
       next({ path: '/login' });
+    }
+  } else {
+    if (hasToken && (to.name === 'register' || to.name === 'login')) {
+      next({ path: '/' });
     } else {
       next();
     }
