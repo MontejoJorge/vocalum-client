@@ -84,14 +84,13 @@ const login = () => {
         <hr />
         <div class="row">
           <div class="col-12 d-grid">
-            <button
-              type="submit"
+            <input
+              type="button"
               class="btn btn-secondary"
               style="height: 58px"
-              @click="router.push('/register')"
-            >
-              Don't have an account? Register
-            </button>
+              @click="$router.push('/login')"
+              value="Don't have an account? Register"
+            />
           </div>
         </div>
       </div>
