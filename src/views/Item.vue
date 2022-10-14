@@ -24,8 +24,25 @@
     <div class="card mb-3" style="max-width: 1000px;">
       <div class="row">
         <div class="col-xl-4 col-xxl-5">
-          <img v-if="!photo" src="https://via.placeholder.com/600x400?text=Loading...">
-          <img v-else :src="genPhotoUrl(photo)" class="img-fluid rounded"/>
+          <button type="button" id="modalButton" class="" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <img v-if="!photo" src="https://via.placeholder.com/600x400?text=Loading...">
+            <img v-else :src="genPhotoUrl(photo)" class="img-fluid rounded"/>
+          </button>
+          <div class="modal fade" id="exampleModal" tabindex="-1">
+            <div class="modal-dialog" id="modalDialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5">{{ title }}</h1>
+                </div>
+                <div class="modal-body" id="modalImg">
+                  <img v-if="photo" :src="genPhotoUrl(photo)" class="img-fluid rounded"/>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="col">
           <div class="card-body container">
@@ -97,10 +114,19 @@
 </template>
 
 <style scoped>
-img {
+img, #modalButton {
   height: 100%;
   max-height: 70vh;
   width: 100%;
   object-fit: cover;
 }
+
+#modalButton {
+  border:none;
+  background: none;
+	color: inherit;
+  padding: 0;
+  outline: inherit;
+}
+
 </style>
