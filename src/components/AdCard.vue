@@ -24,7 +24,7 @@
           </RouterLink>  
         </div>
       </div>
-      <div class="row">
+      <div class="row mb-2">
         <div class="col">
           <p class="card-text crop-text-2">{{ description }}</p>
         </div>
