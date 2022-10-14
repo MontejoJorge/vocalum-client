@@ -7,6 +7,7 @@ const props = defineProps({
   price: Number,
   photo: String,
   url: String,
+  tags: Array
 });
 </script>
 
@@ -31,9 +32,17 @@ const props = defineProps({
           <p class="card-text crop-text-2">{{ description }}</p>
         </div>
       </div>
+      <div class="mb-1">
+        <div v-for="tag in tags">
+          <span class="badge bg-secondary float-start me-1 mb-1">{{ tag.name }}</span>
+        </div>
+      </div>
       <div class="row">
         <div class="col">
-          <p class="btn btn-primary mb-0">{{ price }} €</p>
+          <RouterLink :to="{ name: 'item', params: { id: url } }">
+            <p class="btn btn-primary mb-0">{{ price }} €</p>
+          </RouterLink>
+          
         </div>
       </div>
     </div>
@@ -56,4 +65,5 @@ a {
   display: -webkit-box;
   -webkit-box-orient: vertical;
 }
+
 </style>

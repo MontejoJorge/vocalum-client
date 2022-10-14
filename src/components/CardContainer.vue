@@ -19,6 +19,7 @@ adStore.getAds();
           :price="ad.price"
           :photo="ad.photo"
           :url="ad.url"
+          :tags="ad.tags"
         />
       </div>
     </div>
