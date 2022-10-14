@@ -21,7 +21,7 @@
 
 <template>
   <div class="container d-flex justify-content-center mt-4">
-    <div class="card mb-3" style="max-width: 1000px">
+    <div class="card mb-3" style="max-width: 1000px;">
       <div class="row">
         <div class="col-xl-4 col-xxl-5">
           <img v-if="!photo" src="https://via.placeholder.com/600x400?text=Loading...">
@@ -40,7 +40,7 @@
                   <span class="placeholder col-6"></span>
                   <span class="placeholder col-8"></span>
                 </p>
-                <p v-else class="card-text">{{ description }}</p>
+                <p v-else class="card-text" style=" max-height: 300px; overflow-y: auto;">{{ description }}</p>
               </div>
             </div>
             <div class="row">
