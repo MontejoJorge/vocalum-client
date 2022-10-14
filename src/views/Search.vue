@@ -1,8 +1,6 @@
 <script setup>
-import CardContainer from "../components/CardContainer.vue"
-import SearchFilters from "../components/SearchFilters.vue";
-
-
+import CardContainer from '../components/CardContainer.vue';
+import SearchFilters from '../components/SearchFilters.vue';
 </script>
 
 <template>

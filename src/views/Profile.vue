@@ -1,9 +1,8 @@
-<script setup >
-import { useUserStore } from "../stores/user";
+<script setup>
+import { useUserStore } from '../stores/user';
 
 const userStore = useUserStore();
-userStore.fetchUser()
-
+userStore.fetchUser();
 </script>
 
 <template>

@@ -1,5 +1,5 @@
 <script>
-import { useUserStore } from "../../stores/user";
+import { useUserStore } from '../../stores/user';
 export default {
   setup() {
     const userStore = useUserStore();
@@ -8,21 +8,22 @@ export default {
   data() {
     return {
       user: {
-        name: "",
-        surname: "",
-        email: "",
-        phone: "",
-        password: "",
-        password_confirmation: "",
+        name: '',
+        surname: '',
+        email: '',
+        phone: '',
+        password: '',
+        password_confirmation: '',
       },
       error: null,
     };
   },
   methods: {
     register() {
-      this.userStore.register(this.user)
-      .then(this.$router.push({ path: '/' }))
-      .catch(err => this.error = err)
+      this.userStore
+        .register(this.user)
+        .then(this.$router.push({ path: '/' }))
+        .catch((err) => (this.error = err));
     },
   },
 };

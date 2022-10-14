@@ -1,6 +1,5 @@
-<script setup >
-import CardContainer from "../components/CardContainer.vue"
-
+<script setup>
+import CardContainer from '../components/CardContainer.vue';
 </script>
 
 <template>
