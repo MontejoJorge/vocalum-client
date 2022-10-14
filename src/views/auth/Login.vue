@@ -1,36 +1,28 @@
-<script>
-import { useUserStore } from '../../stores/user';
+<script setup>
+import { ref } from 'vue';
 import $ from 'jquery';
+import router from '../../router/index'
+import { useUserStore } from '../../stores/user';
 
-export default {
-  setup() {
-    const userStore = useUserStore();
-    return { userStore };
-  },
-  data() {
-    return {
-      email: '',
-      password: '',
-      loading: false,
-      error: null,
-    };
-  },
-  methods: {
-    login() {
-      $('input, .btn').prop('disabled', true);
-      this.loading = true;
-      this.userStore
-        .login(this.email, this.password)
-        .then(() => {
-          this.$router.push({ path: '/' });
-        })
-        .catch((err) => (this.error = err))
-        .finally(() => {
-          $('input, .btn').prop('disabled', false);
-          this.loading = false;
-        });
-    },
-  },
+const userStore = useUserStore();
+
+const email = ref(undefined);
+const password = ref(undefined);
+const loading = ref(false);
+const error = ref(null);
+
+const login = () => {
+  $('input, .btn').prop('disabled', true);
+  loading.value = true;
+  userStore.login(email.value, password.value)
+    .then(() => {
+      router.push({ path: '/' });
+    })
+    .catch((err) => (error.value = err))
+    .finally(() => {
+      $('input, .btn').prop('disabled', false);
+      loading.value = false;
+    });
 };
 </script>
 
@@ -55,7 +47,6 @@ export default {
                 type="email"
                 v-model="email"
                 class="form-control"
-                id="floatingInput"
                 placeholder="name@example.com"
               />
               <label for="floatingInput">Email address</label>
@@ -66,10 +57,10 @@ export default {
           <div class="col">
             <div class="form-floating mb-3">
               <input
+                autocomplete="on"
                 type="password"
                 v-model="password"
                 class="form-control"
-                id="floatingPassword"
                 placeholder="Password"
               />
               <label for="floatingPassword">Password</label>
@@ -97,6 +88,7 @@ export default {
               type="submit"
               class="btn btn-secondary"
               style="height: 58px"
+              @click="router.push('/register')"
             >
               Don't have an account? Register
             </button>
