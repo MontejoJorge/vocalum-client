@@ -15,6 +15,10 @@ const addField = () => {
 const removeField = (n) => {
   props.tags.splice(n, 1);
 };
+
+const parseTag = (i) => {
+  props.tags[i] = props.tags[i].trim().toLowerCase().replace(/\s+/g, '-');
+}
 </script>
 
 <template>
@@ -27,6 +31,7 @@ const removeField = (n) => {
           name="tags[]"
           class="form-control mb-0"
           placeholder="Tag"
+          @focusout="parseTag(i)"
         />
       </div>
       <div v-if="i != 0" class="col-3 d-grid">
