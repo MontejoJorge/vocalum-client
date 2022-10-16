@@ -40,8 +40,9 @@ export const useAdStore = defineStore('ads', {
             photo,
             tags,
           })
-          .then((res) => {
-            console.log(res);
+          .then(() => resolve())
+          .catch((err) => {
+            reject(err.data);
           });
       });
     },
