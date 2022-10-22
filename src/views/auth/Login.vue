@@ -88,7 +88,7 @@ const login = () => {
               type="button"
               class="btn btn-secondary"
               style="height: 58px"
-              @click="$router.push('/login')"
+              @click="$router.push('/register')"
               value="Don't have an account? Register"
             />
           </div>
