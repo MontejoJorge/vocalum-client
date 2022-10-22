@@ -12,7 +12,8 @@ export const useAdStore = defineStore('ads', {
       await api.get('/ads').then((res) => {
         this.totalCount = res.data.count;
         this.ads = res.data.ads;
-      });
+      })
+      .catch((err) => console.log(err));
     },
     async searchAds(filter) {
       await api
@@ -23,6 +24,7 @@ export const useAdStore = defineStore('ads', {
             maxPrice: filter.maxPrice,
             tags: filter.tags,
             orderByPrice: filter.orderByPrice,
+            user_email: filter.user_email,
           },
         })
         .then((res) => {

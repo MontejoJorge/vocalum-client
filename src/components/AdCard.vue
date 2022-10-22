@@ -7,7 +7,8 @@ const props = defineProps({
   price: Number,
   photo: String,
   url: String,
-  tags: Array
+  tags: Array,
+  user: Object
 });
 </script>
 
@@ -42,7 +43,7 @@ const props = defineProps({
           <RouterLink :to="{ name: 'item', params: { id: url } }">
             <p class="btn btn-primary mb-0">{{ price }} €</p>
           </RouterLink>
-          
+          {{ user.name }}
         </div>
       </div>
     </div>
