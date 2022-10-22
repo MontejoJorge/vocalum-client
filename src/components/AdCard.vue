@@ -1,5 +1,11 @@
 <script setup>
+import $ from 'jquery';
 import getPhotoURL from '../util/photo';
+import { useUserStore } from '../stores/user';
+import { useAdStore } from '../stores/ads';
+
+const adStore = useAdStore();
+const userStore = useUserStore();
 
 const props = defineProps({
   title: String,
@@ -10,10 +16,19 @@ const props = defineProps({
   tags: Array,
   user: Object
 });
+
+function deleteAd(event) {
+  $(event.target).prop('disabled', true);
+  adStore.deleteAd(props.url)
+    .then(() => console.log('del'))
+    .catch((err) => {
+      $(event.target).prop('disabled', false);
+    })
+}
 </script>
 
 <template>
-  <div class="card contai" style="width: 18rem">
+  <div class="card" style="width: 18rem">
     <RouterLink :to="{ name: 'item', params: { id: url } }">
       <img :src="getPhotoURL(photo)" class="card-img-top" />
     </RouterLink>
@@ -43,9 +58,12 @@ const props = defineProps({
           <RouterLink :to="{ name: 'item', params: { id: url } }">
             <p class="btn btn-primary mb-0">{{ price }} €</p>
           </RouterLink>
-          {{ user.name }}
+        </div>
+        <div v-if="user.email == userStore.email" class="col-4">
+          <button @click="deleteAd" class="btn btn-danger mb-0">D</button>
         </div>
       </div>
+      {{ user.name }}
     </div>
   </div>
 </template>

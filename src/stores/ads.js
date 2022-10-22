@@ -48,6 +48,19 @@ export const useAdStore = defineStore('ads', {
           });
       });
     },
+    deleteAd(url) {
+      return new Promise(async (resolve, reject) => {
+        await api
+          .delete(`/ads/${url}`)
+          .then(() => {
+            const index = this.ads.findIndex((ad) => ad.url === url);
+            this.ads.splice(index, 1);
+            this.count--;
+            resolve()
+          })
+          .catch((err) => reject(err.data));
+      });
+    }
   },
 });
 
