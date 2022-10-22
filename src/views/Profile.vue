@@ -1,14 +1,63 @@
 <script setup>
 import { useUserStore } from '../stores/user';
+import CardContainer from '../components/CardContainer.vue';
+import { useAdStore } from '../stores/ads';
 
 const userStore = useUserStore();
 userStore.fetchUser();
+
+const adStore = useAdStore();
+
+adStore.searchAds({
+  user_email: userStore.email
+});
 </script>
 
 <template>
-  <h2>Profile</h2>
-  <p>{{ userStore.name }}</p>
-  <p>{{ userStore.surname }}</p>
-  <p>{{ userStore.email }}</p>
-  <p>{{ userStore.phone }}</p>
+  <div class="container mt-4">
+    <div class="card">
+      <div class="card-header">Profile</div>
+      <form class="card-body container">
+        <div class="row row-cols-1 row-cols-md-2">
+          <div class="col">
+            <div class="input-group mb-3">
+              <span class="input-group-text">Name</span>
+              <input type="text" class="form-control" :value="userStore.name" />
+            </div>
+          </div>
+          <div class="col">
+            <div class="input-group mb-3">
+              <span class="input-group-text">Surname</span>
+              <input
+                type="text"
+                class="form-control"
+                :value="userStore.surname"
+              />
+            </div>
+          </div>
+          <div class="col">
+            <div class="input-group mb-3">
+              <span class="input-group-text">Email</span>
+              <input
+                type="text"
+                class="form-control"
+                :value="userStore.email"
+              />
+            </div>
+          </div>
+          <div class="col">
+            <div class="input-group mb-3">
+              <span class="input-group-text">Phone</span>
+              <input
+                type="text"
+                class="form-control"
+                :value="userStore.phone"
+              />
+            </div>
+          </div>
+        </div>
+          <CardContainer :ads="adStore.ads"/>
+      </form>
+    </div>
+  </div>
 </template>
