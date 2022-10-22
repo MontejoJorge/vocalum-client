@@ -10,7 +10,7 @@ export const useAdStore = defineStore('ads', {
   actions: {
     async getAds() {
       await api.get('/ads').then((res) => {
-        this.totalCount = res.data.count;
+        this.count = res.data.count;
         this.ads = res.data.ads;
       })
       .catch((err) => console.log(err));
@@ -28,7 +28,7 @@ export const useAdStore = defineStore('ads', {
           },
         })
         .then((res) => {
-          this.totalCount = res.data.count;
+          this.count = res.data.count;
           this.ads = res.data.ads;
         });
     },
