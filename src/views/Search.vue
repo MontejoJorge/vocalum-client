@@ -8,7 +8,6 @@ const adStore = useAdStore();
 </script>
 
 <template>
-  <h1>Search</h1>
-  <SearchFilters />
+  <SearchFilters class="mt-3" />
   <CardContainer :ads="adStore.ads"/>
 </template>

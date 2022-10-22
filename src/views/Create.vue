@@ -42,8 +42,13 @@ function onChangeFileUpload(event) {
 }
 </script>
 
-<template>  
+<template>
   <form class="container mt-3" @submit.prevent="createAd" style="max-width: 800px">
+    <div class="row">
+      <div class="col">
+        <h3>Product information</h3>
+      </div>
+    </div>
     <div v-if="error || successMsg" class="row">
       <div v-if="error" class="col">
         <div class="alert alert-danger alert-dismissible fade show" role="alert">

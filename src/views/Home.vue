@@ -7,7 +7,5 @@ adStore.getAds();
 </script>
 
 <template>
-  <h1>Home</h1>
-
   <CardContainer :ads="adStore.ads"/>
 </template>
