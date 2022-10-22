@@ -1,7 +1,7 @@
-const url = import.meta.env.VITE_STORAGE_URL;
+const url = import.meta.env.VITE_AWS_URL;
 
 const getPhotoURL = (photoUUID) => {
-  return `${url}/${photoUUID}.jpg`;
+  return `${url}${photoUUID}`;
 };
 
 export default getPhotoURL;
