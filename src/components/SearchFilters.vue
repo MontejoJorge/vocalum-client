@@ -1,4 +1,5 @@
 <script setup>
+import $ from 'jquery';
 import { useAdStore } from '../stores/ads';
 import { ref } from 'vue';
 import Tags from './Tags.vue';
@@ -12,6 +13,7 @@ const tags = ref([undefined]);
 const orderByPrice = ref('no');
 
 const search = () => {
+  $('#advanced-search-btn').click();
   adStore.searchAds({
     search: searchText.value,
     minPrice: minPrice.value,
@@ -44,7 +46,7 @@ const search = () => {
           <div class="accordion-item">
             <h2 class="accordion-header">
               <button
-                class="accordion-button collapsed"
+                class="accordion-button"
                 type="button"
                 id="advanced-search-btn"
                 data-bs-toggle="collapse"
@@ -55,7 +57,7 @@ const search = () => {
             </h2>
             <div
               id="advanced-search"
-              class="collapse"
+              class="collapse show"
               data-bs-parent="#accordion-search"
             >
               <div class="accordion-body">
