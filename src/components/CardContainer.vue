@@ -1,11 +1,7 @@
 <script setup>
-import { useAdStore } from '../stores/ads';
 import AdCard from '../components/AdCard.vue';
 
 const props = defineProps({ads: Array});
-
-const adStore = useAdStore();
-adStore.getAds();
 </script>
 
 <template>
