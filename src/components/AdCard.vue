@@ -63,7 +63,6 @@ function deleteAd(event) {
           <button @click="deleteAd" class="btn btn-danger mb-0">D</button>
         </div>
       </div>
-      {{ user.name }}
     </div>
   </div>
 </template>
