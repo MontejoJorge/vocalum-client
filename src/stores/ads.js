@@ -44,7 +44,7 @@ export const useAdStore = defineStore('ads', {
           })
           .then(() => resolve())
           .catch((err) => {
-            reject(err.data);
+            reject(err.response.data);
           });
       });
     },
