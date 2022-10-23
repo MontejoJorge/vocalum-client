@@ -29,7 +29,7 @@ export const useUserStore = defineStore('user', {
           .catch((err) => reject(err.response.data));
       });
     },
-    register({ name, surname, email, phone, password }) {
+    register({ name, surname, email, phone, password, password_confirmation }) {
       return new Promise(async (resolve, reject) => {
         await api
           .post('/auth/register', {
@@ -38,6 +38,7 @@ export const useUserStore = defineStore('user', {
             email,
             phone,
             password,
+            password_confirmation
           })
           .then((res) => {
             this.token = res.data.token;
@@ -45,7 +46,7 @@ export const useUserStore = defineStore('user', {
             this.fetchUser();
             resolve();
           })
-          .catch((err) => reject(err.response.data.message));
+          .catch((err) => reject(err.response.data));
       });
     },
     async fetchUser() {

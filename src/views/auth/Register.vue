@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import $ from 'jquery';
+import { ErrorMessage, Form } from 'vee-validate';
 import router from '../../router/index'
 import { useUserStore } from '../../stores/user';
 
@@ -16,14 +17,15 @@ const user = ref({
 });
 
 const loading = ref(false);
-const error = ref(null);
 
-const register = () => {
+function register(values, actions) {
   $('input, .btn').prop('disabled', true);
   loading.value = true;
   userStore.register(user.value)
     .then(() => router.push({ path: '/' }))
-    .catch((err) => (error.value = err))
+    .catch((err) => {
+      actions.setErrors(err.errors)
+    })
     .finally(() => {
       $('input, .btn').prop('disabled', false);
       loading.value = false;
@@ -33,16 +35,7 @@ const register = () => {
 </script>
 
 <template>
-  <form class="container mt-4" @submit.prevent="register" style="max-width: 500px">
-    <div v-if="error" class="alert alert-danger alert-dismissible fade show">
-      {{ error }}
-      <button
-        type="button"
-        class="btn-close"
-        data-bs-dismiss="alert"
-        aria-label="Close"
-      ></button>
-    </div>
+  <Form @submit="register" v-slot="{ errors }" class="container mt-4 needs-validation" style="max-width: 500px">
     <div class="card">
       <div class="card-header">Register</div>
       <div class="card-body container">
@@ -50,11 +43,14 @@ const register = () => {
           <div class="col">
             <div class="form-floating mb-3">
               <input
+                name="name"
                 type="text"
                 v-model="user.name"
                 class="form-control"
+                :class="{ 'is-invalid': errors.name }"
                 placeholder="Name"
               />
+              <ErrorMessage name="name" class="invalid-feedback"/>
               <label for="floatingInput">Name</label>
             </div>
           </div>
@@ -63,11 +59,14 @@ const register = () => {
           <div class="col">
             <div class="form-floating mb-3">
               <input
+                name="surname"
                 type="text"
                 v-model="user.surname"
                 class="form-control"
+                :class="{ 'is-invalid': errors.surname }"
                 placeholder="Surname"
               />
+              <ErrorMessage name="surname" class="invalid-feedback"/>
               <label for="floatingInput">Surname</label>
             </div>
           </div>
@@ -76,11 +75,14 @@ const register = () => {
           <div class="col">
             <div class="form-floating mb-3">
               <input
+                name="phone"
                 type="number"
                 v-model="user.phone"
                 class="form-control"
+                :class="{ 'is-invalid': errors.phone }"
                 placeholder="Phone number"
               />
+              <ErrorMessage name="phone" class="invalid-feedback"/>
               <label for="floatingInput">Phone number</label>
             </div>
           </div>
@@ -89,11 +91,14 @@ const register = () => {
           <div class="col">
             <div class="form-floating mb-3">
               <input
+                name="email"
                 type="email"
                 v-model="user.email"
                 class="form-control"
+                :class="{ 'is-invalid': errors.email }"
                 placeholder="name@example.com"
               />
+              <ErrorMessage name="email" class="invalid-feedback"/>
               <label for="floatingInput">Email address</label>
             </div>
           </div>
@@ -102,12 +107,15 @@ const register = () => {
           <div class="col">
             <div class="form-floating mb-3">
               <input
-              autocomplete="on"
+                name="password"
+                autocomplete="on"
                 type="password"
                 v-model="user.password"
                 class="form-control"
+                :class="{ 'is-invalid': errors.password }"
                 placeholder="Password"
               />
+              <ErrorMessage name="password" class="invalid-feedback"/>
               <label for="floatingInput">Password</label>
             </div>
           </div>
@@ -116,12 +124,15 @@ const register = () => {
           <div class="col">
             <div class="form-floating mb-3">
               <input
-              autocomplete="on"
+                name="password_confirmation"
+                autocomplete="on"
                 type="password"
                 v-model="user.password_confirmation"
                 class="form-control"
+                :class="{ 'is-invalid': errors.password_confirmation }"
                 placeholder="Password"
               />
+              <ErrorMessage name="password_confirmation" class="invalid-feedback"/>
               <label for="floatingPassword">Repeat the password</label>
             </div>
           </div>
@@ -154,5 +165,5 @@ const register = () => {
         </div>
       </div>
     </div>
-  </form>
+  </Form>
 </template>
