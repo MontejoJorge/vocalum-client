@@ -26,7 +26,7 @@ export const useUserStore = defineStore('user', {
             this.fetchUser();
             resolve();
           })
-          .catch((err) => reject(err.response.data.message));
+          .catch((err) => reject(err.response.data));
       });
     },
     register({ name, surname, email, phone, password }) {

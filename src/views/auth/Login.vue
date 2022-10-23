@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import $ from 'jquery';
+import { ErrorMessage, Form } from 'vee-validate';
 import router from '../../router/index'
 import { useUserStore } from '../../stores/user';
 
@@ -9,34 +10,27 @@ const userStore = useUserStore();
 const email = ref(undefined);
 const password = ref(undefined);
 const loading = ref(false);
-const error = ref(null);
 
-const login = () => {
+function login(values, actions) {
   $('input, .btn').prop('disabled', true);
   loading.value = true;
   userStore.login(email.value, password.value)
     .then(() => {
       router.push({ path: '/' });
     })
-    .catch((err) => (error.value = err))
+    .catch((err) => {
+      actions.setErrors(err.errors)
+    })
     .finally(() => {
       $('input, .btn').prop('disabled', false);
       loading.value = false;
     });
 };
+
 </script>
 
 <template>
-  <form class="container mt-4" @submit.prevent="login" style="max-width: 500px">
-    <div v-if="error" class="alert alert-danger alert-dismissible fade show">
-      {{ error }}
-      <button
-        type="button"
-        class="btn-close"
-        data-bs-dismiss="alert"
-        aria-label="Close"
-      ></button>
-    </div>
+  <Form @submit="login" v-slot="{ errors }" class="container mt-4 needs-validation" style="max-width: 500px">
     <div class="card">
       <div class="card-header">Login</div>
       <div class="card-body container">
@@ -44,11 +38,14 @@ const login = () => {
           <div class="col">
             <div class="form-floating mb-3">
               <input
+                name="email"
                 type="email"
                 v-model="email"
                 class="form-control"
+                :class="{ 'is-invalid': errors.email }"
                 placeholder="name@example.com"
               />
+              <ErrorMessage name="email" class="invalid-feedback"/>
               <label for="floatingInput">Email address</label>
             </div>
           </div>
@@ -59,10 +56,13 @@ const login = () => {
               <input
                 autocomplete="on"
                 type="password"
+                name="password"
                 v-model="password"
                 class="form-control"
+                :class="{ 'is-invalid': errors.password }"
                 placeholder="Password"
               />
+              <ErrorMessage name="password" class="invalid-feedback"/>
               <label for="floatingPassword">Password</label>
             </div>
           </div>
@@ -95,5 +95,5 @@ const login = () => {
         </div>
       </div>
     </div>
-  </form>
+  </Form>
 </template>
