@@ -19,18 +19,20 @@ function login(values, actions) {
       router.push({ path: '/' });
     })
     .catch((err) => {
-      actions.setErrors(err.errors)
+      actions.setErrors(err.errors);
     })
     .finally(() => {
       $('input, .btn').prop('disabled', false);
       loading.value = false;
     });
 };
-
 </script>
 
 <template>
   <Form @submit="login" v-slot="{ errors }" class="container mt-4 needs-validation" style="max-width: 500px">
+    <div v-if="errors.login" class="alert alert-danger fade show" role="alert">
+      {{ errors.login }}
+    </div>
     <div class="card">
       <div class="card-header">Login</div>
       <div class="card-body container">
