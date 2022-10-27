@@ -35,7 +35,7 @@ const parseTag = (i) => {
         />
       </div>
       <div v-if="i != 0" class="col-3 d-grid">
-        <div @click="removeField(i)" class="btn btn-danger">Remove</div>
+        <div @click="removeField(i)" class="btn btn-danger"><i class="bi bi-trash3"></i></div>
       </div>
     </div>
     <div v-if="props.tags.length < 3" class="row">

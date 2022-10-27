@@ -121,13 +121,13 @@ onUnmounted(() => {
             </div>
             <div v-else class="row row-cols-1 row-cols-xl-3">
               <div class="col">
-                <p>{{ user.name }}</p>
+                <p><i class="bi bi-person-fill"></i> {{ user.name }}</p>
               </div>
               <div class="col">
-                <p>{{ user.email }}</p>
+                <p><i class="bi bi-envelope-fill"></i> {{ user.email }}</p>
               </div>
               <div class="col">
-                <p>{{ user.phone }}</p>
+                <p><i class="bi bi-telephone-fill"></i> {{ user.phone }}</p>
               </div>
             </div>
             <hr />
@@ -137,7 +137,7 @@ onUnmounted(() => {
                   <span class="placeholder col-4"></span>
                 </p>
                 <p v-else class="text-muted">
-                  Created: {{ timeSince(created_at) }}
+                  <i class="bi bi-clock-history"></i> Created: {{ timeSince(created_at) }}
                 </p>
               </div>
             </div>
