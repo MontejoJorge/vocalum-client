@@ -60,7 +60,7 @@ function deleteAd(event) {
           </RouterLink>
         </div>
         <div v-if="user.email == userStore.email" class="col-4">
-          <button @click="deleteAd" class="btn btn-danger mb-0">D</button>
+          <button @click="deleteAd" class="btn btn-danger mb-0"><i class="bi bi-trash3"></i></button>
         </div>
       </div>
     </div>
