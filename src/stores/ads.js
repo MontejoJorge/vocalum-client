@@ -3,18 +3,20 @@ import api from './services/axios';
 
 export const useAdStore = defineStore('ads', {
   state: () => ({
-    current_page: 1,
-    last_page: 1,
-    total: 0,
+    current_page: undefined,
+    last_page: undefined,
+    total: undefined,
+    loading: false,
     ads: [],
-
   }),
   getters: {},
   actions: {
     async searchAds(filter = undefined) {
+      this.loading = true;
       await api
         .get('/ads', {
           params: {
+            page: filter?.page || 1,
             search: filter?.search,
             minPrice: filter?.minPrice,
             maxPrice: filter?.maxPrice,
@@ -24,10 +26,15 @@ export const useAdStore = defineStore('ads', {
           },
         })
         .then((res) => {
+          this.loading = false;
+          this.ads = res.data.ads;
           this.total = res.data.total;
           this.ads = res.data.data;
           this.current_page = res.data.current_page;
           this.last_page = res.data.last_page;
+        })
+        .catch((err) => {
+          this.loading = false;
         });
     },
     createAd({ title, description, price, photo, tags }) {
