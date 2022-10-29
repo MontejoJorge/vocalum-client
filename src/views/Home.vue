@@ -3,7 +3,7 @@ import CardContainer from '../components/CardContainer.vue';
 import { useAdStore } from '../stores/ads';
 
 const adStore = useAdStore();
-adStore.getAds();
+adStore.searchAds();
 </script>
 
 <template>
