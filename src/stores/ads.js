@@ -3,33 +3,38 @@ import api from './services/axios';
 
 export const useAdStore = defineStore('ads', {
   state: () => ({
-    count: 0,
+    current_page: undefined,
+    last_page: undefined,
+    total: undefined,
+    loading: false,
     ads: [],
   }),
   getters: {},
   actions: {
-    async getAds() {
-      await api.get('/ads').then((res) => {
-        this.count = res.data.count;
-        this.ads = res.data.ads;
-      })
-      .catch((err) => console.log(err));
-    },
-    async searchAds(filter) {
+    async searchAds(filter = undefined) {
+      this.loading = true;
       await api
         .get('/ads', {
           params: {
-            search: filter.search,
-            minPrice: filter.minPrice,
-            maxPrice: filter.maxPrice,
-            tags: filter.tags,
-            orderByPrice: filter.orderByPrice,
-            user_email: filter.user_email,
+            page: filter?.page || 1,
+            search: filter?.search,
+            minPrice: filter?.minPrice,
+            maxPrice: filter?.maxPrice,
+            tags: filter?.tags,
+            orderByPrice: filter?.orderByPrice,
+            user_email: filter?.user_email,
           },
         })
         .then((res) => {
-          this.count = res.data.count;
+          this.loading = false;
           this.ads = res.data.ads;
+          this.total = res.data.total;
+          this.ads = res.data.data;
+          this.current_page = res.data.current_page;
+          this.last_page = res.data.last_page;
+        })
+        .catch((err) => {
+          this.loading = false;
         });
     },
     createAd({ title, description, price, photo, tags }) {
