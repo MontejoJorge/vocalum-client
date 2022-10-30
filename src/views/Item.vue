@@ -5,6 +5,7 @@ import { storeToRefs } from 'pinia';
 import { useAdInfoStore } from '../stores/ads';
 import { timeSince } from '../util/date';
 import genPhotoUrl from '../util/photo';
+import PlaceholderSvg from '../components/PlaceholderSvg.vue';
 
 const route = useRoute();
 const adInfoStore = useAdInfoStore();
@@ -31,10 +32,7 @@ onUnmounted(() => {
             data-bs-toggle="modal"
             data-bs-target="#exampleModal"
           >
-            <img
-              v-if="!photo"
-              src="https://via.placeholder.com/600x400?text=Loading..."
-            />
+            <PlaceholderSvg v-if="!photo"/>
             <img v-else :src="genPhotoUrl(photo)" class="img-fluid rounded" />
           </button>
           <div class="modal fade" id="exampleModal" tabindex="-1">
@@ -89,7 +87,7 @@ onUnmounted(() => {
             </div>
             <div class="row">
               <div class="col">
-                <p v-if="!price" class="btn btn-primary">-- €</p>
+                <p v-if="!price" class="btn btn-primary disabled placeholder">-- €</p>
                 <p v-else class="btn btn-primary">{{ price }} €</p>
               </div>
             </div>
