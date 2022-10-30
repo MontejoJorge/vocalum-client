@@ -24,7 +24,7 @@ const pages = computed(() => {
     <li class="page-item">
       <RouterLink
         class="page-link"
-        :class="{ disabled: adStore.current_page === 1, disabled: adStore.loading }"
+        :class="{ disabled: (adStore.current_page === 1) || adStore.loading }"
         :to="`?page=${adStore.current_page - 1}`"
         >Previous
       </RouterLink>
@@ -48,7 +48,7 @@ const pages = computed(() => {
     <li class="page-item">
       <RouterLink
         class="page-link"
-        :class="{ disabled: adStore.current_page === adStore.last_page, disabled: adStore.loading }"
+        :class="{ disabled: (adStore.current_page === adStore.last_page) || adStore.loading }"
         :to="`?page=${adStore.current_page + 1}`"
         >Next</RouterLink
       >
