@@ -4,6 +4,10 @@ const props = defineProps({
     type: Array,
     default: [''],
   },
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const addField = () => {
@@ -18,7 +22,7 @@ const removeField = (n) => {
 
 const parseTag = (i) => {
   props.tags[i] = props.tags[i].trim().toLowerCase().replace(/\s+/g, '-');
-}
+};
 </script>
 
 <template>
@@ -35,12 +39,24 @@ const parseTag = (i) => {
         />
       </div>
       <div v-if="i != 0" class="col-3 d-grid">
-        <div @click="removeField(i)" class="btn btn-danger"><i class="bi bi-trash3"></i></div>
+        <div
+          @click="removeField(i)"
+          class="btn btn-danger"
+          :class="{ disabled: props.disabled }"
+        >
+          <i class="bi bi-trash3"></i>
+        </div>
       </div>
     </div>
     <div v-if="props.tags.length < 3" class="row">
       <div class="col d-grid">
-        <div @click="addField" class="btn btn-success">Add more tags</div>
+        <div
+          @click="addField"
+          class="btn btn-success"
+          :class="{ disabled: props.disabled }"
+        >
+          Add more tags
+        </div>
       </div>
     </div>
   </div>

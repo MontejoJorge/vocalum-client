@@ -116,12 +116,18 @@ function onChangeFileUpload(event) {
           />
           <ErrorMessage name="photo" class="invalid-feedback"/>
         </div>
-        <Tags :tags="ad.tags" />
+        <Tags :tags="ad.tags" :disabled="loading"/>
       </div>
     </div>
     <div class="row">
       <div class="col d-grid">
-        <button type="submit" class="btn btn-primary">Create</button>
+        <button v-if="!loading" type="submit" class="btn btn-primary">Create</button>
+        <button v-else type="submit" class="btn btn-primary disabled">
+          <div class="spinner-border spinner-border-sm text-light" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          Loading...
+        </button>
       </div>
     </div>
   </Form>
