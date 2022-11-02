@@ -1,16 +1,41 @@
 <script setup>
+import { watch, onBeforeMount } from 'vue';
+import { useRoute } from 'vue-router';
 import { useUserStore } from '../stores/user';
 import CardContainer from '../components/CardContainer.vue';
 import { useAdStore } from '../stores/ads';
 
 const userStore = useUserStore();
-userStore.fetchUser();
-
+const route = useRoute();
 const adStore = useAdStore();
 
-adStore.searchAds({
-  user_email: userStore.email
+onBeforeMount(() => {
+  adStore.$reset();
 });
+
+if (!userStore.email) {
+  userStore.fetchUser().then(() => {
+    adStore.searchAds({
+      user_email: userStore.email,
+      page: route.query.page,
+    });
+  });
+} else {
+  adStore.searchAds({
+    user_email: userStore.email,
+    page: route.query.page,
+  });
+}
+
+watch(
+  () => route.query.page,
+  () => {
+    adStore.searchAds({
+      user_email: userStore.email,
+      page: route.query.page
+    });
+  }
+);
 </script>
 
 <template>
@@ -56,7 +81,7 @@ adStore.searchAds({
             </div>
           </div>
         </div>
-          <CardContainer :ads="adStore.ads"/>
+        <CardContainer :ads="adStore.ads" />
       </form>
     </div>
   </div>

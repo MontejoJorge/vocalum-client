@@ -3,39 +3,44 @@ import api from './services/axios';
 
 export const useAdStore = defineStore('ads', {
   state: () => ({
-    count: 0,
+    current_page: undefined,
+    last_page: undefined,
+    total: undefined,
+    loading: false,
     ads: [],
   }),
   getters: {},
   actions: {
-    async getAds() {
-      await api.get('/ads').then((res) => {
-        this.count = res.data.count;
-        this.ads = res.data.ads;
-      })
-      .catch((err) => console.log(err));
-    },
-    async searchAds(filter) {
+    async searchAds(filter = undefined) {
+      this.loading = true;
       await api
-        .get('/ads', {
+        .get('/items', {
           params: {
-            search: filter.search,
-            minPrice: filter.minPrice,
-            maxPrice: filter.maxPrice,
-            tags: filter.tags,
-            orderByPrice: filter.orderByPrice,
-            user_email: filter.user_email,
+            page: filter?.page || 1,
+            search: filter?.search,
+            minPrice: filter?.minPrice,
+            maxPrice: filter?.maxPrice,
+            tags: filter?.tags,
+            orderByPrice: filter?.orderByPrice,
+            user_email: filter?.user_email,
           },
         })
         .then((res) => {
-          this.count = res.data.count;
+          this.loading = false;
           this.ads = res.data.ads;
+          this.total = res.data.total;
+          this.ads = res.data.data;
+          this.current_page = res.data.current_page;
+          this.last_page = res.data.last_page;
+        })
+        .catch((err) => {
+          this.loading = false;
         });
     },
     createAd({ title, description, price, photo, tags }) {
       return new Promise(async (resolve, reject) => {
         await api
-          .post('/ads', {
+          .post('/items', {
             title,
             description,
             price,
@@ -51,7 +56,7 @@ export const useAdStore = defineStore('ads', {
     deleteAd(url) {
       return new Promise(async (resolve, reject) => {
         await api
-          .delete(`/ads/${url}`)
+          .delete(`/items/${url}`)
           .then(() => {
             const index = this.ads.findIndex((ad) => ad.url === url);
             this.ads.splice(index, 1);
@@ -79,12 +84,12 @@ export const useAdInfoStore = defineStore('ad', {
     getAdInfo(url) {
       return new Promise(async (resolve, reject) => {
         await api
-          .get(`/ads/${url}`)
+          .get(`/items/${url}`)
           .then((res) => {
             Object.assign(this, res.data);
           })
           .catch((err) => {
-            reject(err);
+            reject(err.response);
           });
       });
     },

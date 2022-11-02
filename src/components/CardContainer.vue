@@ -1,5 +1,9 @@
 <script setup>
 import AdCard from '../components/AdCard.vue';
+import Pagination from './Pagination.vue';
+import { useAdStore } from '../stores/ads';
+
+const adStore = useAdStore();
 
 const props = defineProps({ads: Array});
 </script>
@@ -9,7 +13,12 @@ const props = defineProps({ads: Array});
     <div
       class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xxl-5"
     >
-      <div v-for="ad in props.ads" :key="ad.url" class="d-flex justify-content-center">
+      <div
+        v-if="!adStore.loading"
+        v-for="ad in props.ads"
+        :key="ad.url"
+        class="d-flex justify-content-center"
+      >
         <AdCard
           class="mb-4"
           :title="ad.title"
@@ -21,6 +30,18 @@ const props = defineProps({ads: Array});
           :user="ad.user"
         />
       </div>
+      <div
+        v-if="adStore.loading"
+        v-for="i in 25"
+        class="d-flex justify-content-center"
+      >
+        <AdCard
+        class="mb-4"
+          :loading="adStore.loading"
+        >
+        </AdCard>
+      </div>
     </div>
+    <Pagination/>
   </div>
 </template>

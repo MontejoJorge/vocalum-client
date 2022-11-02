@@ -2,14 +2,21 @@
 import { onUnmounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { storeToRefs } from 'pinia';
+import router from '../router';
 import { useAdInfoStore } from '../stores/ads';
 import { timeSince } from '../util/date';
 import genPhotoUrl from '../util/photo';
+import PlaceholderSvg from '../components/PlaceholderSvg.vue';
 
 const route = useRoute();
 const adInfoStore = useAdInfoStore();
 
-adInfoStore.getAdInfo(route.params.id);
+adInfoStore.getAdInfo(route.params.id)
+.catch((err) => {
+  if (err.status === 404) {
+    router.push({ name: 'not-found' });
+  }
+});
 
 const { title, description, price, photo, created_at, tags, user } =
   storeToRefs(adInfoStore);
@@ -31,10 +38,7 @@ onUnmounted(() => {
             data-bs-toggle="modal"
             data-bs-target="#exampleModal"
           >
-            <img
-              v-if="!photo"
-              src="https://via.placeholder.com/600x400?text=Loading..."
-            />
+            <PlaceholderSvg v-if="!photo"/>
             <img v-else :src="genPhotoUrl(photo)" class="img-fluid rounded" />
           </button>
           <div class="modal fade" id="exampleModal" tabindex="-1">
@@ -89,7 +93,7 @@ onUnmounted(() => {
             </div>
             <div class="row">
               <div class="col">
-                <p v-if="!price" class="btn btn-primary">-- €</p>
+                <p v-if="!price" class="btn btn-primary disabled placeholder">-- €</p>
                 <p v-else class="btn btn-primary">{{ price }} €</p>
               </div>
             </div>
@@ -121,13 +125,13 @@ onUnmounted(() => {
             </div>
             <div v-else class="row row-cols-1 row-cols-xl-3">
               <div class="col">
-                <p>{{ user.name }}</p>
+                <p><i class="bi bi-person-fill"></i> {{ user.name }}</p>
               </div>
               <div class="col">
-                <p>{{ user.email }}</p>
+                <p><i class="bi bi-envelope-fill"></i> {{ user.email }}</p>
               </div>
               <div class="col">
-                <p>{{ user.phone }}</p>
+                <p><i class="bi bi-telephone-fill"></i> {{ user.phone }}</p>
               </div>
             </div>
             <hr />
@@ -137,7 +141,7 @@ onUnmounted(() => {
                   <span class="placeholder col-4"></span>
                 </p>
                 <p v-else class="text-muted">
-                  Created: {{ timeSince(created_at) }}
+                  <i class="bi bi-clock-history"></i> Created: {{ timeSince(created_at) }}
                 </p>
               </div>
             </div>
