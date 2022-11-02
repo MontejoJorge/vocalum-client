@@ -1,5 +1,5 @@
 <script setup>
-import { watch } from 'vue';
+import { watch, onBeforeMount } from 'vue';
 import { useRoute } from 'vue-router';
 import { useUserStore } from '../stores/user';
 import CardContainer from '../components/CardContainer.vue';
@@ -8,6 +8,10 @@ import { useAdStore } from '../stores/ads';
 const userStore = useUserStore();
 const route = useRoute();
 const adStore = useAdStore();
+
+onBeforeMount(() => {
+  adStore.$reset();
+});
 
 if (!userStore.email) {
   userStore.fetchUser().then(() => {
@@ -22,7 +26,6 @@ if (!userStore.email) {
     page: route.query.page,
   });
 }
-
 
 watch(
   () => route.query.page,
