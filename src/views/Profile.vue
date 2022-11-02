@@ -9,12 +9,20 @@ const userStore = useUserStore();
 const route = useRoute();
 const adStore = useAdStore();
 
-userStore.fetchUser();
+if (!userStore.email) {
+  userStore.fetchUser().then(() => {
+    adStore.searchAds({
+      user_email: userStore.email,
+      page: route.query.page,
+    });
+  });
+} else {
+  adStore.searchAds({
+    user_email: userStore.email,
+    page: route.query.page,
+  });
+}
 
-adStore.searchAds({
-  user_email: userStore.email,
-  page: route.query.page
-});
 
 watch(
   () => route.query.page,
@@ -70,7 +78,7 @@ watch(
             </div>
           </div>
         </div>
-          <CardContainer :ads="adStore.ads"/>
+        <CardContainer :ads="adStore.ads" />
       </form>
     </div>
   </div>
