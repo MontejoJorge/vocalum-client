@@ -14,7 +14,7 @@ export const useAdStore = defineStore('ads', {
     async searchAds(filter = undefined) {
       this.loading = true;
       await api
-        .get('/ads', {
+        .get('/items', {
           params: {
             page: filter?.page || 1,
             search: filter?.search,
@@ -40,7 +40,7 @@ export const useAdStore = defineStore('ads', {
     createAd({ title, description, price, photo, tags }) {
       return new Promise(async (resolve, reject) => {
         await api
-          .post('/ads', {
+          .post('/items', {
             title,
             description,
             price,
@@ -56,7 +56,7 @@ export const useAdStore = defineStore('ads', {
     deleteAd(url) {
       return new Promise(async (resolve, reject) => {
         await api
-          .delete(`/ads/${url}`)
+          .delete(`/items/${url}`)
           .then(() => {
             const index = this.ads.findIndex((ad) => ad.url === url);
             this.ads.splice(index, 1);
@@ -84,7 +84,7 @@ export const useAdInfoStore = defineStore('ad', {
     getAdInfo(url) {
       return new Promise(async (resolve, reject) => {
         await api
-          .get(`/ads/${url}`)
+          .get(`/items/${url}`)
           .then((res) => {
             Object.assign(this, res.data);
           })
