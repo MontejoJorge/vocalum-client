@@ -13,7 +13,8 @@ const tags = ref([undefined]);
 const orderByPrice = ref('no');
 
 const search = () => {
-  $('#advanced-search-btn').click();
+  $('#advanced-search-btn').addClass('collapsed');
+  $('#advanced-search').removeClass('show');
   adStore.searchAds({
     search: searchText.value,
     minPrice: minPrice.value,
@@ -37,7 +38,11 @@ const search = () => {
         />
       </div>
       <div class="col-12 col-md-3 d-grid">
-        <button class="btn btn-outline-success" type="submit">Search</button>
+        <button 
+          class="btn btn-outline-success"
+          :class="{ 'disabled': adStore.loading }"
+          type="submit"
+        >Search</button>
       </div>
     </div>
     <div class="row justify-content-center">
