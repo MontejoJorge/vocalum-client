@@ -1,7 +1,7 @@
 <script setup>
-import { Collapse } from 'bootstrap';
+import $ from 'jquery';
 import { useAdStore } from '../stores/ads';
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
 import Tags from './Tags.vue';
 
 const adStore = useAdStore();
@@ -12,16 +12,9 @@ const maxPrice = ref(undefined);
 const tags = ref([undefined]);
 const orderByPrice = ref('no');
 
-const collapse = ref(undefined);
-
-onMounted(() => {
-  collapse.value = new Collapse('#advanced-search', {
-    toggle: false,
-  });
-});
-
 const search = () => {
-  collapse.value.hide();
+  $('#advanced-search-btn').addClass('collapsed');
+  $('#advanced-search').removeClass('show');
   adStore.searchAds({
     search: searchText.value,
     minPrice: minPrice.value,
