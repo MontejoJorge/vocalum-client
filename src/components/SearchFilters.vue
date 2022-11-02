@@ -1,16 +1,25 @@
 <script setup>
 import $ from 'jquery';
+import { ref, watch } from 'vue';
+import { useRoute } from 'vue-router';
 import { useAdStore } from '../stores/ads';
-import { ref } from 'vue';
 import Tags from './Tags.vue';
 
 const adStore = useAdStore();
+const route = useRoute();
 
 const searchText = ref(undefined);
 const minPrice = ref(undefined);
 const maxPrice = ref(undefined);
 const tags = ref([undefined]);
 const orderByPrice = ref('no');
+
+watch(
+  () => route.query.page,
+  () => {
+    search();
+  }
+);
 
 const search = () => {
   $('#advanced-search-btn').click();
@@ -20,6 +29,7 @@ const search = () => {
     maxPrice: maxPrice.value,
     tags: tags.value,
     orderByPrice: orderByPrice.value,
+    page: route.query.page,
   });
 };
 </script>
