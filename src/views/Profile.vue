@@ -1,5 +1,5 @@
 <script setup>
-import { watch } from 'vue';
+import { watch, onBeforeMount } from 'vue';
 import { useRoute } from 'vue-router';
 import { useUserStore } from '../stores/user';
 import CardContainer from '../components/CardContainer.vue';
@@ -9,12 +9,23 @@ const userStore = useUserStore();
 const route = useRoute();
 const adStore = useAdStore();
 
-userStore.fetchUser();
-
-adStore.searchAds({
-  user_email: userStore.email,
-  page: route.query.page
+onBeforeMount(() => {
+  adStore.$reset();
 });
+
+if (!userStore.email) {
+  userStore.fetchUser().then(() => {
+    adStore.searchAds({
+      user_email: userStore.email,
+      page: route.query.page,
+    });
+  });
+} else {
+  adStore.searchAds({
+    user_email: userStore.email,
+    page: route.query.page,
+  });
+}
 
 watch(
   () => route.query.page,
@@ -70,7 +81,7 @@ watch(
             </div>
           </div>
         </div>
-          <CardContainer :ads="adStore.ads"/>
+        <CardContainer :ads="adStore.ads" />
       </form>
     </div>
   </div>
