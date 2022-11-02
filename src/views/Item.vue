@@ -2,6 +2,7 @@
 import { onUnmounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { storeToRefs } from 'pinia';
+import router from '../router';
 import { useAdInfoStore } from '../stores/ads';
 import { timeSince } from '../util/date';
 import genPhotoUrl from '../util/photo';
@@ -10,7 +11,12 @@ import PlaceholderSvg from '../components/PlaceholderSvg.vue';
 const route = useRoute();
 const adInfoStore = useAdInfoStore();
 
-adInfoStore.getAdInfo(route.params.id);
+adInfoStore.getAdInfo(route.params.id)
+.catch((err) => {
+  if (err.status === 404) {
+    router.push({ name: 'not-found' });
+  }
+});
 
 const { title, description, price, photo, created_at, tags, user } =
   storeToRefs(adInfoStore);

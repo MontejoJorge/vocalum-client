@@ -89,7 +89,7 @@ export const useAdInfoStore = defineStore('ad', {
             Object.assign(this, res.data);
           })
           .catch((err) => {
-            reject(err);
+            reject(err.response);
           });
       });
     },
