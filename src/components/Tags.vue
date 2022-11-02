@@ -21,6 +21,7 @@ const removeField = (n) => {
 };
 
 const parseTag = (i) => {
+  if (!props.tags[i]) return;
   props.tags[i] = props.tags[i].trim().toLowerCase().replace(/\s+/g, '-');
 };
 </script>
