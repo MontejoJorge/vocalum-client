@@ -45,7 +45,11 @@ const search = () => {
         />
       </div>
       <div class="col-12 col-md-3 d-grid">
-        <button class="btn btn-outline-success" type="submit">Search</button>
+        <button 
+          class="btn btn-outline-success"
+          :class="{ 'disabled': adStore.loading }"
+          type="submit"
+        >Search</button>
       </div>
     </div>
     <div class="row justify-content-center">
