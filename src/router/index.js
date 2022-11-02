@@ -8,6 +8,7 @@ const Profile = () => import('../views/Profile.vue');
 const Create = () => import('../views/Create.vue');
 const Search = () => import('../views/Search.vue');
 const Item = () => import('../views/Item.vue');
+const NotFound = () => import('../views/404.vue');
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -49,6 +50,11 @@ const router = createRouter({
       name: 'item',
       component: Item,
     },
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'not-found',
+      component: NotFound,
+    }
   ],
 });
 
