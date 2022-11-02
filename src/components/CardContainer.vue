@@ -32,7 +32,7 @@ const props = defineProps({ads: Array});
       </div>
       <div
         v-if="adStore.loading"
-        v-for="i in 8"
+        v-for="i in 25"
         class="d-flex justify-content-center"
       >
         <AdCard
