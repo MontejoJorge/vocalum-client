@@ -11,6 +11,7 @@ const adStore = useAdStore();
 
 onBeforeMount(() => {
   adStore.$reset();
+  adStore.loading = true;
 });
 
 if (!userStore.email) {
