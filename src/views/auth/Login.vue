@@ -1,11 +1,13 @@
 <script setup>
 import { ref } from 'vue';
 import $ from 'jquery';
+import { useRoute } from 'vue-router';
 import { ErrorMessage, Form } from 'vee-validate';
 import router from '../../router/index'
 import { useUserStore } from '../../stores/user';
 
 const userStore = useUserStore();
+const route = useRoute();
 
 const email = ref(undefined);
 const password = ref(undefined);
@@ -16,7 +18,7 @@ function login(values, actions) {
   loading.value = true;
   userStore.login(email.value, password.value)
     .then(() => {
-      router.push({ path: '/' });
+      router.push(route.query.redirect || '/' );
     })
     .catch((err) => {
       actions.setErrors(err.errors);
