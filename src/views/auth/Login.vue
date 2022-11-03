@@ -27,7 +27,18 @@ onMounted(() => {
 });
 
 function onSignIn(response) {
-  console.log(response.credential);
+  $('input, .btn').prop('disabled', true);
+  loading.value = true;
+  if (response.credential) {
+    userStore.googleAuth(response.credential)
+    .then(() => {
+      router.push(route.query.redirect || '/' );
+    })
+    .finally(() => {
+      $('input, .btn').prop('disabled', false);
+      loading.value = false;
+    });
+  }
 }
 
 function login(values, actions) {
