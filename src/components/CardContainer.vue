@@ -5,7 +5,7 @@ import { useAdStore } from '../stores/ads';
 
 const adStore = useAdStore();
 
-const props = defineProps({ads: Array});
+const props = defineProps({ ads: Array });
 </script>
 
 <template>
@@ -14,7 +14,7 @@ const props = defineProps({ads: Array});
       class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xxl-5"
     >
       <div
-        v-if="!adStore.loading"
+        v-if="!adStore.loading && adStore.ads.length != 0"
         v-for="ad in props.ads"
         :key="ad.url"
         class="d-flex justify-content-center"
@@ -35,13 +35,12 @@ const props = defineProps({ads: Array});
         v-for="i in 25"
         class="d-flex justify-content-center"
       >
-        <AdCard
-        class="mb-4"
-          :loading="adStore.loading"
-        >
-        </AdCard>
+        <AdCard class="mb-4" :loading="adStore.loading"> </AdCard>
       </div>
     </div>
-    <Pagination/>
+    <Pagination v-if="adStore.ads.length != 0" />
+  </div>
+  <div v-if="adStore.ads.length === 0 && !adStore.loading" class="col-12">
+    <div class="alert alert-warning" role="alert">No items to display.</div>
   </div>
 </template>
