@@ -1,7 +1,8 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import $ from 'jquery';
 import { ErrorMessage, Form } from 'vee-validate';
+import { mountGoogleButton } from '../../util/auth';
 import router from '../../router/index'
 import { useUserStore } from '../../stores/user';
 
@@ -17,6 +18,10 @@ const user = ref({
 });
 
 const loading = ref(false);
+
+onMounted(() => {
+  mountGoogleButton();
+});
 
 function register(values, actions) {
   $('input, .btn').prop('disabled', true);
@@ -138,7 +143,7 @@ function register(values, actions) {
           </div>
         </div>
         <div class="row">
-          <div class="col-12 d-grid">
+          <div class="col-12 d-grid mb-3">
             <button type="submit" class="btn btn-primary" style="height: 58px">
               <span
                 v-if="loading"
@@ -149,6 +154,11 @@ function register(values, actions) {
               <span v-if="loading" class="ms-1">Loading...</span>
               <span v-if="!loading">Register</span>
             </button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 d-flex justify-content-center">
+            <div id="googleButton" data-auto_prompt="false"></div>
           </div>
         </div>
         <hr />

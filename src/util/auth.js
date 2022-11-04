@@ -14,3 +14,31 @@ export function setToken(token) {
 export function removeToken() {
   return Cookies.remove(TokenKey);
 }
+
+function onSignIn(response) {
+  $('input, .btn').prop('disabled', true);
+  loading.value = true;
+  if (response.credential) {
+    userStore.googleAuth(response.credential)
+    .then(() => {
+      router.push(route.query.redirect || '/' );
+    })
+    .finally(() => {
+      $('input, .btn').prop('disabled', false);
+      loading.value = false;
+    });
+  }
+}
+
+export function mountGoogleButton() {
+  google.accounts.id.initialize({
+    client_id:
+      '191398710109-rp9vj85bpvp661vndon6j9d5qh3bcaj4.apps.googleusercontent.com',
+    callback: onSignIn,
+  });
+  google.accounts.id.renderButton(document.getElementById('googleButton'), {
+    theme: 'outline',
+    size: 'large',
+    with: 400,
+  });
+}
