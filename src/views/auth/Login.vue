@@ -19,7 +19,7 @@ onMounted(() => {
       '191398710109-rp9vj85bpvp661vndon6j9d5qh3bcaj4.apps.googleusercontent.com',
     callback: onSignIn,
   });
-  google.accounts.id.renderButton(document.getElementById('buttonDiv'), {
+  google.accounts.id.renderButton(document.getElementById('googleButton'), {
     theme: 'outline',
     size: 'large',
     with: 400,
@@ -115,7 +115,7 @@ function login(values, actions) {
         </div>
         <div class="row">
           <div class="col-12 d-flex justify-content-center">
-            <div id="buttonDiv" data-auto_prompt="false"></div>
+            <div id="googleButton" data-auto_prompt="false"></div>
           </div>
         </div>
         <hr />
