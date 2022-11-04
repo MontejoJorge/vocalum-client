@@ -49,6 +49,21 @@ export const useUserStore = defineStore('user', {
           .catch((err) => reject(err.response.data));
       });
     },
+    googleAuth(token) {
+      return new Promise(async (resolve, reject) => {
+        await api
+          .post('/auth/google', {
+            google_token: token,
+          })
+          .then((res) => {
+            this.token = res.data.token;
+            setToken(this.token);
+            this.fetchUser();
+            resolve();
+          })
+          .catch((err) => reject(err.response.data));
+      });
+    },
     async fetchUser() {
       return new Promise(async (resolve, reject) => {
         await api.get('/user').then((res) => {

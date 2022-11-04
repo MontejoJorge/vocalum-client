@@ -1,9 +1,9 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import $ from 'jquery';
 import { useRoute } from 'vue-router';
 import { ErrorMessage, Form } from 'vee-validate';
-import router from '../../router/index'
+import router from '../../router/index';
 import { useUserStore } from '../../stores/user';
 
 const userStore = useUserStore();
@@ -12,6 +12,34 @@ const route = useRoute();
 const email = ref(undefined);
 const password = ref(undefined);
 const loading = ref(false);
+
+onMounted(() => {
+  google.accounts.id.initialize({
+    client_id:
+      '191398710109-rp9vj85bpvp661vndon6j9d5qh3bcaj4.apps.googleusercontent.com',
+    callback: onSignIn,
+  });
+  google.accounts.id.renderButton(document.getElementById('buttonDiv'), {
+    theme: 'outline',
+    size: 'large',
+    with: 400,
+  });
+});
+
+function onSignIn(response) {
+  $('input, .btn').prop('disabled', true);
+  loading.value = true;
+  if (response.credential) {
+    userStore.googleAuth(response.credential)
+    .then(() => {
+      router.push(route.query.redirect || '/' );
+    })
+    .finally(() => {
+      $('input, .btn').prop('disabled', false);
+      loading.value = false;
+    });
+  }
+}
 
 function login(values, actions) {
   $('input, .btn').prop('disabled', true);
@@ -27,7 +55,7 @@ function login(values, actions) {
       $('input, .btn').prop('disabled', false);
       loading.value = false;
     });
-};
+}
 </script>
 
 <template>
@@ -72,7 +100,7 @@ function login(values, actions) {
           </div>
         </div>
         <div class="row">
-          <div class="col-12 d-grid">
+          <div class="col-12 d-grid mb-3">
             <button type="submit" class="btn btn-primary" style="height: 58px">
               <span
                 v-if="loading"
@@ -83,6 +111,11 @@ function login(values, actions) {
               <span v-if="loading" class="ms-1">Loading...</span>
               <span v-if="!loading">Login</span>
             </button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 d-flex justify-content-center">
+            <div id="buttonDiv" data-auto_prompt="false"></div>
           </div>
         </div>
         <hr />
