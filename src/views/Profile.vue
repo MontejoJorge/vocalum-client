@@ -68,6 +68,7 @@ watch(
                 type="text"
                 class="form-control"
                 :value="userStore.email"
+                :disabled="userStore.google == 1"
               />
             </div>
           </div>
