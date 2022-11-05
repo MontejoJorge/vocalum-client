@@ -28,7 +28,7 @@ const userStore = useUserStore();
           </li>
         </ul>
         <ul class="nav navbar-nav ml-auto w-100 justify-content-end">
-          <li v-if="userStore.name" class="nav-item dropdown">
+          <li v-if="userStore.name != undefined" class="nav-item dropdown">
             <a
               class="nav-link dropdown-toggle"
               role="button"
@@ -54,7 +54,7 @@ const userStore = useUserStore();
               <span class="d-inline">Login</span>
             </RouterLink>
           </li>
-          <li v-if="!userStore.name" class="nav-item">
+          <li v-if="userStore.name === undefined" class="nav-item">
             <RouterLink to="/register" class="nav-link">
               <span class="d-inline">Register</span>
             </RouterLink>
