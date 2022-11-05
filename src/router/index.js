@@ -65,7 +65,7 @@ router.beforeEach(async (to, from, next) => {
     if (hasToken) {
       next();
     } else {
-      next({ path: '/login' });
+      next({ path: '/login', query: { redirect: to.fullPath } });
     }
   } else {
     if (hasToken && (to.name === 'register' || to.name === 'login')) {
