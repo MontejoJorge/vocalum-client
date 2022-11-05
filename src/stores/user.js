@@ -65,7 +65,23 @@ export const useUserStore = defineStore('user', {
           .catch((err) => reject(err.response.data));
       });
     },
-    async fetchUser() {
+    update({ name, surname, email, phone}) {
+      return new Promise(async (resolve, reject) => {
+        await api
+          .post('/user', {
+            name,
+            surname,
+            email,
+            phone
+          })
+          .then((res) => {
+            this.fetchUser();
+            resolve();
+          })
+          .catch((err) => reject(err.response.data));
+      });
+    },
+    fetchUser() {
       return new Promise(async (resolve, reject) => {
         await api.get('/user').then((res) => {
           const { name, surname, email, phone, google } = res.data;
