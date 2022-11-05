@@ -9,6 +9,7 @@ export const useUserStore = defineStore('user', {
     surname: undefined,
     email: undefined,
     phone: undefined,
+    google: undefined,
     token: getToken(),
   }),
   getters: {},
@@ -64,14 +65,31 @@ export const useUserStore = defineStore('user', {
           .catch((err) => reject(err.response.data));
       });
     },
-    async fetchUser() {
+    update({ name, surname, email, phone}) {
+      return new Promise(async (resolve, reject) => {
+        await api
+          .post('/user', {
+            name,
+            surname,
+            email,
+            phone
+          })
+          .then((res) => {
+            this.fetchUser();
+            resolve();
+          })
+          .catch((err) => reject(err.response.data));
+      });
+    },
+    fetchUser() {
       return new Promise(async (resolve, reject) => {
         await api.get('/user').then((res) => {
-          const { name, surname, email, phone } = res.data;
+          const { name, surname, email, phone, google } = res.data;
           this.name = name;
           this.surname = surname;
           this.email = email;
           this.phone = phone;
+          this.google = google;
           resolve();
         })
         .catch((err) => {
