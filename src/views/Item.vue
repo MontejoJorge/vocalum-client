@@ -168,4 +168,14 @@ img,
   padding: 0;
   outline: inherit;
 }
+
+.btn, .btn:hover, .btn:focus, .btn:active {
+  cursor: default;
+	background-color: #0D6EFD;
+  border-color: #0D6EFD;
+	color: white;
+	text-decoration: none;	
+	opacity:1.0;
+	box-shadow:none;
+}
 </style>
