@@ -1,9 +1,11 @@
 <script setup>
+import { useRoute } from 'vue-router';
 import AdCard from '../components/AdCard.vue';
 import Pagination from './Pagination.vue';
 import { useAdStore } from '../stores/ads';
 
 const adStore = useAdStore();
+const route = useRoute();
 
 const props = defineProps({ ads: Array });
 </script>
@@ -40,7 +42,12 @@ const props = defineProps({ ads: Array });
     </div>
     <Pagination v-if="adStore.ads.length != 0" />
   </div>
-  <div v-if="adStore.ads.length === 0 && !adStore.loading" class="col-12">
+  <div
+    v-if="
+      adStore.ads.length === 0 && !adStore.loading && route.name === 'profile'
+    "
+    class="col-12"
+  >
     <div class="alert alert-warning" role="alert">No items to display.</div>
   </div>
 </template>
