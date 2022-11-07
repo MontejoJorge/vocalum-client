@@ -11,9 +11,10 @@ export const useAdStore = defineStore('ads', {
   }),
   getters: {},
   actions: {
-    async searchAds(filter = undefined) {
+    searchAds(filter = undefined) {
       this.loading = true;
-      await api
+      return new Promise(async (resolve, reject) => {
+        await api
         .get('/items', {
           params: {
             page: filter?.page || 1,
@@ -32,10 +33,13 @@ export const useAdStore = defineStore('ads', {
           this.ads = res.data.data;
           this.current_page = res.data.current_page;
           this.last_page = res.data.last_page;
+          resolve();
         })
         .catch((err) => {
           this.loading = false;
+          reject(err.response.data);
         });
+      });
     },
     createAd({ title, description, price, photo, tags }) {
       return new Promise(async (resolve, reject) => {
