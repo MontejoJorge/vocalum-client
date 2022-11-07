@@ -67,7 +67,7 @@ watch(
         class="card-body container"
       >
         <div
-        v-if="successMsg"
+          v-if="successMsg"
           class="alert alert-success alert-dismissible fade show"
           role="alert"
         >

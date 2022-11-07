@@ -9,5 +9,5 @@ const adStore = useAdStore();
 
 <template>
   <SearchFilters class="mt-3" />
-  <CardContainer :ads="adStore.ads"/>
+  <CardContainer :ads="adStore.ads" />
 </template>

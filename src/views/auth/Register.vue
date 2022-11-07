@@ -3,7 +3,7 @@ import { ref, onMounted } from 'vue';
 import $ from 'jquery';
 import { useRoute } from 'vue-router';
 import { ErrorMessage, Form } from 'vee-validate';
-import router from '../../router/index'
+import router from '../../router/index';
 import { useUserStore } from '../../stores/user';
 
 const userStore = useUserStore();
@@ -37,35 +37,41 @@ function onSignIn(response) {
   $('input, .btn').prop('disabled', true);
   loading.value = true;
   if (response.credential) {
-    userStore.googleAuth(response.credential)
-    .then(() => {
-      router.push(route.query.redirect || '/' );
-    })
-    .finally(() => {
-      $('input, .btn').prop('disabled', false);
-      loading.value = false;
-    });
+    userStore
+      .googleAuth(response.credential)
+      .then(() => {
+        router.push(route.query.redirect || '/');
+      })
+      .finally(() => {
+        $('input, .btn').prop('disabled', false);
+        loading.value = false;
+      });
   }
 }
 
 function register(values, actions) {
   $('input, .btn').prop('disabled', true);
   loading.value = true;
-  userStore.register(user.value)
+  userStore
+    .register(user.value)
     .then(() => router.push({ path: '/' }))
     .catch((err) => {
-      actions.setErrors(err.errors)
+      actions.setErrors(err.errors);
     })
     .finally(() => {
       $('input, .btn').prop('disabled', false);
       loading.value = false;
     });
 }
-
 </script>
 
 <template>
-  <Form @submit="register" v-slot="{ errors }" class="container mt-4 needs-validation" style="max-width: 500px">
+  <Form
+    @submit="register"
+    v-slot="{ errors }"
+    class="container mt-4 needs-validation"
+    style="max-width: 500px"
+  >
     <div class="card">
       <div class="card-header">Register</div>
       <div class="card-body container">
@@ -80,7 +86,7 @@ function register(values, actions) {
                 :class="{ 'is-invalid': errors.name }"
                 placeholder="Name"
               />
-              <ErrorMessage name="name" class="invalid-feedback"/>
+              <ErrorMessage name="name" class="invalid-feedback" />
               <label for="floatingInput">Name</label>
             </div>
           </div>
@@ -96,7 +102,7 @@ function register(values, actions) {
                 :class="{ 'is-invalid': errors.surname }"
                 placeholder="Surname"
               />
-              <ErrorMessage name="surname" class="invalid-feedback"/>
+              <ErrorMessage name="surname" class="invalid-feedback" />
               <label for="floatingInput">Surname</label>
             </div>
           </div>
@@ -112,7 +118,7 @@ function register(values, actions) {
                 :class="{ 'is-invalid': errors.phone }"
                 placeholder="Phone number"
               />
-              <ErrorMessage name="phone" class="invalid-feedback"/>
+              <ErrorMessage name="phone" class="invalid-feedback" />
               <label for="floatingInput">Phone number</label>
             </div>
           </div>
@@ -128,7 +134,7 @@ function register(values, actions) {
                 :class="{ 'is-invalid': errors.email }"
                 placeholder="name@example.com"
               />
-              <ErrorMessage name="email" class="invalid-feedback"/>
+              <ErrorMessage name="email" class="invalid-feedback" />
               <label for="floatingInput">Email address</label>
             </div>
           </div>
@@ -145,7 +151,7 @@ function register(values, actions) {
                 :class="{ 'is-invalid': errors.password }"
                 placeholder="Password"
               />
-              <ErrorMessage name="password" class="invalid-feedback"/>
+              <ErrorMessage name="password" class="invalid-feedback" />
               <label for="floatingInput">Password</label>
             </div>
           </div>
@@ -162,7 +168,10 @@ function register(values, actions) {
                 :class="{ 'is-invalid': errors.password_confirmation }"
                 placeholder="Password"
               />
-              <ErrorMessage name="password_confirmation" class="invalid-feedback"/>
+              <ErrorMessage
+                name="password_confirmation"
+                class="invalid-feedback"
+              />
               <label for="floatingPassword">Repeat the password</label>
             </div>
           </div>

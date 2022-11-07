@@ -25,24 +25,29 @@ watch(
 const search = (values, actions) => {
   $('#advanced-search-btn').addClass('collapsed');
   $('#advanced-search').removeClass('show');
-  adStore.searchAds({
-    search: searchText.value,
-    minPrice: minPrice.value,
-    maxPrice: maxPrice.value,
-    tags: tags.value,
-    orderByPrice: orderByPrice.value,
-    page: route.query.page,
-  })
-  .catch((err) => {
-    actions.setErrors(err.errors);
-    $('#advanced-search-btn').removeClass('collapsed');
-    $('#advanced-search').addClass('show');
-  });
+  adStore
+    .searchAds({
+      search: searchText.value,
+      minPrice: minPrice.value,
+      maxPrice: maxPrice.value,
+      tags: tags.value,
+      orderByPrice: orderByPrice.value,
+      page: route.query.page,
+    })
+    .catch((err) => {
+      actions.setErrors(err.errors);
+      $('#advanced-search-btn').removeClass('collapsed');
+      $('#advanced-search').addClass('show');
+    });
 };
 </script>
 
 <template>
-  <Form @submit="search" v-slot="{ errors }" class="container justify-content-center">
+  <Form
+    @submit="search"
+    v-slot="{ errors }"
+    class="container justify-content-center"
+  >
     <div class="row justify-content-center mb-2">
       <div class="col-12 col-md-9 mb-1 mb-md-0">
         <input
@@ -53,14 +58,16 @@ const search = (values, actions) => {
           type="search"
           placeholder="Search"
         />
-        <ErrorMessage name="search" class="invalid-feedback"/>
+        <ErrorMessage name="search" class="invalid-feedback" />
       </div>
       <div class="col-12 col-md-3 d-grid">
-        <button 
+        <button
           class="btn btn-outline-success"
-          :class="{ 'disabled': adStore.loading }"
+          :class="{ disabled: adStore.loading }"
           type="submit"
-        >Search</button>
+        >
+          Search
+        </button>
       </div>
     </div>
     <div class="row justify-content-center">
@@ -97,7 +104,7 @@ const search = (values, actions) => {
                         :class="{ 'is-invalid': errors.minPrice }"
                         placeholder="Min"
                       />
-                      <ErrorMessage name="minPrice" class="invalid-feedback"/>
+                      <ErrorMessage name="minPrice" class="invalid-feedback" />
                     </div>
                   </div>
                   <div class="col-12 col-sm-6">
@@ -111,7 +118,7 @@ const search = (values, actions) => {
                         :class="{ 'is-invalid': errors.maxPrice }"
                         placeholder="Max"
                       />
-                      <ErrorMessage name="maxPrice" class="invalid-feedback"/>
+                      <ErrorMessage name="maxPrice" class="invalid-feedback" />
                     </div>
                   </div>
                 </div>
@@ -128,7 +135,10 @@ const search = (values, actions) => {
                       <option value="asc">Price (Ascendant)</option>
                       <option value="desc">Price (Descendant)</option>
                     </select>
-                    <ErrorMessage name="orderByPrice" class="invalid-feedback"/>
+                    <ErrorMessage
+                      name="orderByPrice"
+                      class="invalid-feedback"
+                    />
                   </div>
                 </div>
                 <div class="row">

@@ -15,30 +15,30 @@ export const useAdStore = defineStore('ads', {
       this.loading = true;
       return new Promise(async (resolve, reject) => {
         await api
-        .get('/items', {
-          params: {
-            page: filter?.page || 1,
-            search: filter?.search,
-            minPrice: filter?.minPrice,
-            maxPrice: filter?.maxPrice,
-            tags: filter?.tags,
-            orderByPrice: filter?.orderByPrice,
-            user_email: filter?.user_email,
-          },
-        })
-        .then((res) => {
-          this.loading = false;
-          this.ads = res.data.ads;
-          this.total = res.data.total;
-          this.ads = res.data.data;
-          this.current_page = res.data.current_page;
-          this.last_page = res.data.last_page;
-          resolve();
-        })
-        .catch((err) => {
-          this.loading = false;
-          reject(err.response.data);
-        });
+          .get('/items', {
+            params: {
+              page: filter?.page || 1,
+              search: filter?.search,
+              minPrice: filter?.minPrice,
+              maxPrice: filter?.maxPrice,
+              tags: filter?.tags,
+              orderByPrice: filter?.orderByPrice,
+              user_email: filter?.user_email,
+            },
+          })
+          .then((res) => {
+            this.loading = false;
+            this.ads = res.data.ads;
+            this.total = res.data.total;
+            this.ads = res.data.data;
+            this.current_page = res.data.current_page;
+            this.last_page = res.data.last_page;
+            resolve();
+          })
+          .catch((err) => {
+            this.loading = false;
+            reject(err.response.data);
+          });
       });
     },
     createAd({ title, description, price, photo, tags }) {
@@ -65,11 +65,11 @@ export const useAdStore = defineStore('ads', {
             const index = this.ads.findIndex((ad) => ad.url === url);
             this.ads.splice(index, 1);
             this.count--;
-            resolve()
+            resolve();
           })
           .catch((err) => reject(err.data));
       });
-    }
+    },
   },
 });
 

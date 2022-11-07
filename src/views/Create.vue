@@ -32,7 +32,7 @@ function createAd(values, actions) {
       successMsg.value = 'Ad posted successfully.';
     })
     .catch((err) => {
-      actions.setErrors(err.errors)
+      actions.setErrors(err.errors);
     })
     .finally(() => {
       $('input, .btn, textarea').prop('disabled', false);
@@ -46,7 +46,12 @@ function onChangeFileUpload(event) {
 </script>
 
 <template>
-  <Form @submit="createAd" v-slot="{ errors }" class="container mt-3" style="max-width: 800px">
+  <Form
+    @submit="createAd"
+    v-slot="{ errors }"
+    class="container mt-3"
+    style="max-width: 800px"
+  >
     <div class="row">
       <div class="col">
         <h3>Product information</h3>
@@ -79,7 +84,7 @@ function onChangeFileUpload(event) {
             :class="{ 'is-invalid': errors.title }"
             placeholder="In some words..."
           />
-          <ErrorMessage name="title" class="invalid-feedback"/>
+          <ErrorMessage name="title" class="invalid-feedback" />
         </div>
         <div class="input-group mb-3">
           <span class="input-group-text">Description</span>
@@ -90,7 +95,7 @@ function onChangeFileUpload(event) {
             :class="{ 'is-invalid': errors.description }"
             placeholder="Add relevant information such as condition, model, color..."
           ></textarea>
-          <ErrorMessage name="description" class="invalid-feedback"/>
+          <ErrorMessage name="description" class="invalid-feedback" />
         </div>
         <div class="input-group mb-3">
           <span class="input-group-text">Price</span>
@@ -103,7 +108,7 @@ function onChangeFileUpload(event) {
             placeholder="Price in Euros"
           />
           <span class="input-group-text">€</span>
-          <ErrorMessage name="price" class="invalid-feedback"/>
+          <ErrorMessage name="price" class="invalid-feedback" />
         </div>
         <div class="input-group mb-3">
           <label class="input-group-text">Photo</label>
@@ -114,16 +119,21 @@ function onChangeFileUpload(event) {
             class="form-control"
             :class="{ 'is-invalid': errors.photo }"
           />
-          <ErrorMessage name="photo" class="invalid-feedback"/>
+          <ErrorMessage name="photo" class="invalid-feedback" />
         </div>
-        <Tags :tags="ad.tags" :disabled="loading"/>
+        <Tags :tags="ad.tags" :disabled="loading" />
       </div>
     </div>
     <div class="row">
       <div class="col d-grid">
-        <button v-if="!loading" type="submit" class="btn btn-primary">Create</button>
+        <button v-if="!loading" type="submit" class="btn btn-primary">
+          Create
+        </button>
         <button v-else type="submit" class="btn btn-primary disabled">
-          <div class="spinner-border spinner-border-sm text-light" role="status">
+          <div
+            class="spinner-border spinner-border-sm text-light"
+            role="status"
+          >
             <span class="visually-hidden">Loading...</span>
           </div>
           Loading...

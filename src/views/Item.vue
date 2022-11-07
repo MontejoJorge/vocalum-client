@@ -11,8 +11,7 @@ import PlaceholderSvg from '../components/PlaceholderSvg.vue';
 const route = useRoute();
 const adInfoStore = useAdInfoStore();
 
-adInfoStore.getAdInfo(route.params.id)
-.catch((err) => {
+adInfoStore.getAdInfo(route.params.id).catch((err) => {
   if (err.status === 404) {
     router.push({ name: 'not-found' });
   }
@@ -38,7 +37,7 @@ onUnmounted(() => {
             data-bs-toggle="modal"
             data-bs-target="#exampleModal"
           >
-            <PlaceholderSvg v-if="!photo"/>
+            <PlaceholderSvg v-if="!photo" />
             <img v-else :src="genPhotoUrl(photo)" class="img-fluid rounded" />
           </button>
           <div class="modal fade" id="exampleModal" tabindex="-1">
@@ -93,7 +92,9 @@ onUnmounted(() => {
             </div>
             <div class="row">
               <div class="col">
-                <p v-if="!price" class="btn btn-primary disabled placeholder">-- €</p>
+                <p v-if="!price" class="btn btn-primary disabled placeholder">
+                  -- €
+                </p>
                 <p v-else class="btn btn-primary">{{ price }} €</p>
               </div>
             </div>
@@ -141,7 +142,8 @@ onUnmounted(() => {
                   <span class="placeholder col-4"></span>
                 </p>
                 <p v-else class="text-muted">
-                  <i class="bi bi-clock-history"></i> Created: {{ timeSince(created_at) }}
+                  <i class="bi bi-clock-history"></i> Created:
+                  {{ timeSince(created_at) }}
                 </p>
               </div>
             </div>
@@ -169,13 +171,16 @@ img,
   outline: inherit;
 }
 
-.btn, .btn:hover, .btn:focus, .btn:active {
+.btn,
+.btn:hover,
+.btn:focus,
+.btn:active {
   cursor: default;
-	background-color: #0D6EFD;
-  border-color: #0D6EFD;
-	color: white;
-	text-decoration: none;	
-	opacity:1.0;
-	box-shadow:none;
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+  color: white;
+  text-decoration: none;
+  opacity: 1;
+  box-shadow: none;
 }
 </style>

@@ -30,23 +30,25 @@ function onSignIn(response) {
   $('input, .btn').prop('disabled', true);
   loading.value = true;
   if (response.credential) {
-    userStore.googleAuth(response.credential)
-    .then(() => {
-      router.push(route.query.redirect || '/' );
-    })
-    .finally(() => {
-      $('input, .btn').prop('disabled', false);
-      loading.value = false;
-    });
+    userStore
+      .googleAuth(response.credential)
+      .then(() => {
+        router.push(route.query.redirect || '/');
+      })
+      .finally(() => {
+        $('input, .btn').prop('disabled', false);
+        loading.value = false;
+      });
   }
 }
 
 function login(values, actions) {
   $('input, .btn').prop('disabled', true);
   loading.value = true;
-  userStore.login(email.value, password.value)
+  userStore
+    .login(email.value, password.value)
     .then(() => {
-      router.push(route.query.redirect || '/' );
+      router.push(route.query.redirect || '/');
     })
     .catch((err) => {
       actions.setErrors(err.errors);
@@ -59,7 +61,12 @@ function login(values, actions) {
 </script>
 
 <template>
-  <Form @submit="login" v-slot="{ errors }" class="container mt-4 needs-validation" style="max-width: 500px">
+  <Form
+    @submit="login"
+    v-slot="{ errors }"
+    class="container mt-4 needs-validation"
+    style="max-width: 500px"
+  >
     <div v-if="errors.login" class="alert alert-danger fade show" role="alert">
       {{ errors.login }}
     </div>
@@ -77,7 +84,7 @@ function login(values, actions) {
                 :class="{ 'is-invalid': errors.email }"
                 placeholder="name@example.com"
               />
-              <ErrorMessage name="email" class="invalid-feedback"/>
+              <ErrorMessage name="email" class="invalid-feedback" />
               <label for="floatingInput">Email address</label>
             </div>
           </div>
@@ -94,7 +101,7 @@ function login(values, actions) {
                 :class="{ 'is-invalid': errors.password }"
                 placeholder="Password"
               />
-              <ErrorMessage name="password" class="invalid-feedback"/>
+              <ErrorMessage name="password" class="invalid-feedback" />
               <label for="floatingPassword">Password</label>
             </div>
           </div>

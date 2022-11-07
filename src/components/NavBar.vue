@@ -38,7 +38,10 @@ const userStore = useUserStore();
             </a>
             <ul class="dropdown-menu dropdown-menu-end">
               <li>
-                <button class="dropdown-item" @click="router.push({path: '/profile'})">
+                <button
+                  class="dropdown-item"
+                  @click="router.push({ path: '/profile' })"
+                >
                   Profile
                 </button>
               </li>

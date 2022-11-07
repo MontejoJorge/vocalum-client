@@ -39,7 +39,7 @@ export const useUserStore = defineStore('user', {
             email,
             phone,
             password,
-            password_confirmation
+            password_confirmation,
           })
           .then((res) => {
             this.token = res.data.token;
@@ -65,14 +65,14 @@ export const useUserStore = defineStore('user', {
           .catch((err) => reject(err.response.data));
       });
     },
-    update({ name, surname, email, phone}) {
+    update({ name, surname, email, phone }) {
       return new Promise(async (resolve, reject) => {
         await api
           .post('/user', {
             name,
             surname,
             email,
-            phone
+            phone,
           })
           .then((res) => {
             this.fetchUser();
@@ -83,19 +83,21 @@ export const useUserStore = defineStore('user', {
     },
     fetchUser() {
       return new Promise(async (resolve, reject) => {
-        await api.get('/user').then((res) => {
-          const { name, surname, email, phone, google } = res.data;
-          this.name = name;
-          this.surname = surname;
-          this.email = email;
-          this.phone = phone;
-          this.google = google;
-          resolve();
-        })
-        .catch((err) => {
-          this.logOut();
-          reject(err.response.data);
-        });
+        await api
+          .get('/user')
+          .then((res) => {
+            const { name, surname, email, phone, google } = res.data;
+            this.name = name;
+            this.surname = surname;
+            this.email = email;
+            this.phone = phone;
+            this.google = google;
+            resolve();
+          })
+          .catch((err) => {
+            this.logOut();
+            reject(err.response.data);
+          });
       });
     },
     logOut() {
