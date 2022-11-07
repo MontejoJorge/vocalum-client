@@ -112,7 +112,7 @@ onUnmounted(() => {
               </div>
             </div>
             <hr />
-            <div v-if="!user" class="row row-cols-1 row-cols-xl-3">
+            <div v-if="!user" class="row row-cols-1">
               <div class="col placeholder-glow">
                 <span class="placeholder col-7"></span>
               </div>
@@ -123,14 +123,14 @@ onUnmounted(() => {
                 <span class="placeholder col-7"></span>
               </div>
             </div>
-            <div v-else class="row row-cols-1 row-cols-xl-3">
+            <div v-else class="row row-cols-1">
               <div class="col">
                 <p><i class="bi bi-person-fill"></i> {{ user.name }}</p>
               </div>
               <div class="col">
                 <p><i class="bi bi-envelope-fill"></i> {{ user.email }}</p>
               </div>
-              <div class="col">
+              <div v-if="user.phone" class="col">
                 <p><i class="bi bi-telephone-fill"></i> {{ user.phone }}</p>
               </div>
             </div>
@@ -167,5 +167,15 @@ img,
   color: inherit;
   padding: 0;
   outline: inherit;
+}
+
+.btn, .btn:hover, .btn:focus, .btn:active {
+  cursor: default;
+	background-color: #0D6EFD;
+  border-color: #0D6EFD;
+	color: white;
+	text-decoration: none;	
+	opacity:1.0;
+	box-shadow:none;
 }
 </style>

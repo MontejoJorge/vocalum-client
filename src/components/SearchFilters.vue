@@ -2,6 +2,7 @@
 import $ from 'jquery';
 import { ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
+import { ErrorMessage, Form } from 'vee-validate';
 import { useAdStore } from '../stores/ads';
 import Tags from './Tags.vue';
 
@@ -21,7 +22,7 @@ watch(
   }
 );
 
-const search = () => {
+const search = (values, actions) => {
   $('#advanced-search-btn').addClass('collapsed');
   $('#advanced-search').removeClass('show');
   adStore.searchAds({
@@ -31,21 +32,28 @@ const search = () => {
     tags: tags.value,
     orderByPrice: orderByPrice.value,
     page: route.query.page,
+  })
+  .catch((err) => {
+    actions.setErrors(err.errors);
+    $('#advanced-search-btn').removeClass('collapsed');
+    $('#advanced-search').addClass('show');
   });
 };
 </script>
 
 <template>
-  <form @submit.prevent="search" class="container justify-content-center">
+  <Form @submit="search" v-slot="{ errors }" class="container justify-content-center">
     <div class="row justify-content-center mb-2">
       <div class="col-12 col-md-9 mb-1 mb-md-0">
         <input
           name="search"
           v-model="searchText"
           class="form-control me-2"
+          :class="{ 'is-invalid': errors.search }"
           type="search"
           placeholder="Search"
         />
+        <ErrorMessage name="search" class="invalid-feedback"/>
       </div>
       <div class="col-12 col-md-3 d-grid">
         <button 
@@ -62,6 +70,7 @@ const search = () => {
             <h2 class="accordion-header">
               <button
                 class="accordion-button"
+                :class="{ 'is-invalid': errors.search }"
                 type="button"
                 id="advanced-search-btn"
                 data-bs-toggle="collapse"
@@ -85,20 +94,24 @@ const search = () => {
                         type="text"
                         v-model="minPrice"
                         class="form-control"
+                        :class="{ 'is-invalid': errors.minPrice }"
                         placeholder="Min"
                       />
+                      <ErrorMessage name="minPrice" class="invalid-feedback"/>
                     </div>
                   </div>
                   <div class="col-12 col-sm-6">
                     <div class="input-group">
                       <span class="input-group-text">€ Max.</span>
                       <input
-                        name="price_max"
+                        name="maxPrice"
                         type="text"
                         v-model="maxPrice"
                         class="form-control"
+                        :class="{ 'is-invalid': errors.maxPrice }"
                         placeholder="Max"
                       />
+                      <ErrorMessage name="maxPrice" class="invalid-feedback"/>
                     </div>
                   </div>
                 </div>
@@ -109,11 +122,13 @@ const search = () => {
                       name="orderByPrice"
                       v-model="orderByPrice"
                       class="form-select"
+                      :class="{ 'is-invalid': errors.orderByPrice }"
                     >
                       <option selected value="no">Choose...</option>
                       <option value="asc">Price (Ascendant)</option>
                       <option value="desc">Price (Descendant)</option>
                     </select>
+                    <ErrorMessage name="orderByPrice" class="invalid-feedback"/>
                   </div>
                 </div>
                 <div class="row">
@@ -136,7 +151,7 @@ const search = () => {
         </div>
       </div>
     </div>
-  </form>
+  </Form>
 </template>
 
 <style>
