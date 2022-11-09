@@ -4,6 +4,7 @@ import { ref } from 'vue';
 import { ErrorMessage, Form } from 'vee-validate';
 import { useAdStore } from '../stores/ads';
 import Tags from '../components/Tags.vue';
+import router from '../router/index';
 
 const adStore = useAdStore();
 const ad = ref({
@@ -22,14 +23,14 @@ function createAd(values, actions) {
   loading.value = true;
   adStore
     .createAd(ad.value)
-    .then(() => {
+    .then((res) => {
       ad.value.title = '';
       ad.value.description = '';
       ad.value.price = '';
       ad.value.photo = '';
       $("[type='file']").val(null);
       ad.value.tags = [''];
-      successMsg.value = 'Ad posted successfully.';
+      router.push({ name: 'item', params: { id: res.url } });
     })
     .catch((err) => {
       actions.setErrors(err.errors);

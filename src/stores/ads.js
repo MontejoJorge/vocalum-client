@@ -51,7 +51,7 @@ export const useAdStore = defineStore('ads', {
             photo,
             tags,
           })
-          .then(() => resolve())
+          .then((res) => resolve(res.data))
           .catch((err) => {
             reject(err.response.data);
           });
