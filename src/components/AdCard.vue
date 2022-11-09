@@ -65,9 +65,27 @@ function deleteAd(event) {
           </RouterLink>
         </div>
         <div v-if="user.email == userStore.email" class="col-4">
-          <button @click="deleteAd" class="btn btn-danger mb-0">
+          <div class="btn btn-danger mb-0" data-bs-toggle="modal" data-bs-target="#deleteModal">
             <i class="bi bi-trash3"></i>
-          </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Are you sure?</h1>
+            <div type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></div>
+          </div>
+          <div class="modal-body">
+            You are sure you want to delete the ad: {{ title }} ?
+          </div>
+          <div class="modal-footer">
+            <div type="button" class="btn btn-secondary" data-bs-dismiss="modal">No, cancel.</div>
+            <div @click="deleteAd" class="btn btn-danger" data-bs-dismiss="modal">Yes, delete.</div>
+          </div>
         </div>
       </div>
     </div>
